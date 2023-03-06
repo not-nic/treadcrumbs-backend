@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<vehicles>
+    <vehicle filename="data/vehicles/fendt/vario700/vario700.xml" id="7" isAbsolute="true" age="12.000000" price="193000.000000" farmId="1" propertyState="1" operatingTime="142.884079" selectedObjectIndex="1" subSelectedObjectIndex="1">
+        <component index="1" position="707.43414306641 64.231475830078 440.68859863281" rotation="1.4704000295909 -1.258826489035 -5.4605471305625"/>
+        <component index="2" position="707.44769287109 64.785194396973 442.47808837891" rotation="1.4754153094324 -1.2528808093625 -5.6884692625054"/>
+        <configuration name="wheel" id="TRELLEBORG_BROAD"/>
+        <configuration name="motor" id="4"/>
+        <configuration name="fillUnit" id="1"/>
+        <configuration name="cropSensor" id="1"/>
+        <configuration name="frontloader" id="1"/>
+        <boughtConfiguration name="motor" id="1"/>
+        <boughtConfiguration name="motor" id="4"/>
+        <boughtConfiguration name="fillUnit" id="1"/>
+        <boughtConfiguration name="cropSensor" id="1"/>
+        <boughtConfiguration name="wheel" id="TRELLEBORG_DEFAULT"/>
+        <boughtConfiguration name="wheel" id="TRELLEBORG_BROAD"/>
+        <boughtConfiguration name="frontloader" id="1"/>
+        <washable>
+            <dirtNode amount="0.019696"/>
+            <dirtNode amount="0.501361" snowScale="0.000000"/>
+            <dirtNode amount="0.501398" snowScale="0.000000"/>
+            <dirtNode amount="0.501481" snowScale="0.000000"/>
+            <dirtNode amount="0.501503" snowScale="0.000000"/>
+        </washable>
+        <wearable damage="0.001739">
+            <wearNode amount="0.003693"/>
+        </wearable>
+        <licensePlates variation="1" characters="UQ-163-UY" colorIndex="1" placementIndex="1"/>
+        <wheels lastWheelConfiguration="3"/>
+        <enterable activeCameraIndex="1">
+            <camera rotation="-15.228234648202 76.861608404907 0" translation="0 0 10.14996911295" zoom="10.149986" fovY="0.950021"/>
+            <camera rotation="-13.000000646349 180.00000500896 0" translation="0 2.5732939243317 -0.85945701599121" zoom="2.713036" fovY="1.047198"/>
+        </enterable>
+        <fillUnit>
+            <unit index="1" fillType="DIESEL" fillLevel="328.99282"/>
+            <unit index="2" fillType="DEF" fillLevel="38.000000"/>
+            <unit index="3" fillType="AIR" fillLevel="3713.360840"/>
+        </fillUnit>
+        <drivable cruiseControl="53" cruiseControlReverse="22"/>
+        <aiFieldWorker lastTurnDirection="false"/>
+        <attacherJoints comboDirection="-1"/>
+        <actionController lastDirection="-1" numActions="1">
+            <action name="lower" identifier="data/vehicles/horsch/terrano3FX/terrano3FX.xml" lastDirection="-1"/>
+        </actionController>
+    </vehicle>
+    <vehicle filename="data/vehicles/fendt/vario900/vario900.xml" id="8" isAbsolute="true" age="19.000000" price="280000.000000" farmId="1" propertyState="1" operatingTime="0.000000" selectedObjectIndex="1" subSelectedObjectIndex="1">
+        <component index="1" position="601.09924316406 64.941062927246 124.09884643555" rotation="0.13334761077537 0.016081623704889 0.00018351261089971"/>
+        <configuration name="design" id="1"/>
+        <configuration name="wheel" id="TRELLEBORG_DEFAULT"/>
+        <configuration name="motor" id="1"/>
+        <configuration name="fillUnit" id="1"/>
+        <configuration name="cropSensor" id="1"/>
+        <configuration name="rimColor" id="1"/>
+        <boughtConfiguration name="design" id="1"/>
+        <boughtConfiguration name="wheel" id="TRELLEBORG_DEFAULT"/>
+        <boughtConfiguration name="fillUnit" id="1"/>
+        <boughtConfiguration name="cropSensor" id="1"/>
+        <boughtConfiguration name="rimColor" id="1"/>
+        <boughtConfiguration name="motor" id="1"/>
+        <washable>
+            <dirtNode amount="0.000061"/>
+            <dirtNode amount="0.000061" snowScale="0.000000"/>
+            <dirtNode amount="0.000061" snowScale="0.000000"/>
+            <dirtNode amount="0.000061" snowScale="0.000000"/>
+            <dirtNode amount="0.000061" snowScale="0.000000"/>
+        </washable>
+        <wearable damage="1.444212">
+            <wearNode amount="0.000011"/>
+        </wearable>
+        <licensePlates variation="1" characters="AO-112-EY" colorIndex="1" placementIndex="1"/>
+        <wheels lastWheelConfiguration="1"/>
+        <enterable activeCameraIndex="1">
+            <camera rotation="-19.999999418186 180.00000500896 0" translation="0 0 7.3000001907349" zoom="7.300010" fovY="0.950021"/>
+            <camera rotation="-16.000001583605 180.00000500896 0" translation="-0 1.1393300294876 -0.30919298529625" zoom="1.180549" fovY="1.047198"/>
+        </enterable>
+        <fillUnit>
+            <unit index="1" fillType="DIESEL" fillLevel="625.000000"/>
+            <unit index="2" fillType="DEF" fillLevel="70.000000"/>
+            <unit index="3" fillType="AIR" fillLevel="4000.000000"/>
+        </fillUnit>
+        <drivable cruiseControl="63" cruiseControlReverse="22"/>
+        <aiFieldWorker lastTurnDirection="false"/>
+        <attacherJoints comboDirection="-1"/>
+        <reverseDriving isActive="false"/>
+    </vehicle>
+    <vehicle filename="data/vehicles/horsch/terrano3FX/terrano3FX.xml" id="9" isAbsolute="true" age="0.000000" price="15000.000000" farmId="1" propertyState="1" operatingTime="142.196793">
+        <component index="1" position="707.55383300781 64.64469909668 437.0553894043" rotation="8.5782753427873 -1.2588114412745 -5.4605864041503"/>
+        <configuration name="wheel" id="1"/>
+        <boughtConfiguration name="wheel" id="1"/>
+        <washable>
+            <dirtNode amount="0.038539"/>
+            <dirtNode amount="0.507818"/>
+            <dirtNode amount="0.509166"/>
+        </washable>
+        <wearable damage="0.001719">
+            <wearNode amount="0.006641"/>
+        </wearable>
+        <wheels lastWheelConfiguration="1"/>
+        <attacherJoints comboDirection="-1"/>
+    </vehicle>
+    <vehicle filename="data/vehicles/kuhn/hr4040/hr4040.xml" id="10" isAbsolute="true" age="0.000000" price="25000.000000" farmId="1" propertyState="1" operatingTime="0.000000" selectedObjectIndex="1" subSelectedObjectIndex="1">
+        <component index="1" position="608.74987792969 64.999992370605 123.93403625488" rotation="0.0018373210951743 -0.0080631350317459 0.00080939226805576"/>
+        <component index="2" position="608.74993896484 65.442642211914 123.28789520264" rotation="0.077086302045344 -0.0077314056170642 0.00054242792104347"/>
+        <configuration name="wheel" id="1"/>
+        <boughtConfiguration name="wheel" id="1"/>
+        <washable>
+            <dirtNode amount="0.000044"/>
+        </washable>
+        <wearable damage="1.84921">
+            <wearNode amount="0.000008"/>
+        </wearable>
+        <wheels lastWheelConfiguration="1"/>
+        <attacherJoints comboDirection="-1"/>
+        <actionController lastDirection="-1" numActions="2">
+            <action name="turnOn" identifier="data/vehicles/kuhn/hr4040/hr4040.xml" lastDirection="-1"/>
+            <action name="turnOn" identifier="data/vehicles/kuhn/venta4030/venta4030.xml" lastDirection="-1"/>
+        </actionController>
+    </vehicle>
+    <vehicle filename="data/vehicles/kuhn/venta4030/venta4030.xml" id="11" isAbsolute="true" age="0.000000" price="25000.000000" farmId="1" propertyState="1" operatingTime="0.000000">
+        <component index="1" position="608.74987792969 65.145683288574 123.92102813721" rotation="0.6783151044581 -0.0074623326825994 0.00046229711637021"/>
+        <configuration name="fillUnit" id="1"/>
+        <configuration name="wheel" id="LIZARD_DEFAULT"/>
+        <configuration name="fillVolume" id="1"/>
+        <configuration name="cover" id="1"/>
+        <boughtConfiguration name="fillUnit" id="1"/>
+        <boughtConfiguration name="wheel" id="LIZARD_DEFAULT"/>
+        <boughtConfiguration name="cover" id="1"/>
+        <boughtConfiguration name="fillVolume" id="1"/>
+        <washable>
+            <dirtNode amount="0.000034"/>
+        </washable>
+        <wearable damage="0.232123">
+            <wearNode amount="0.000006"/>
+        </wearable>
+        <licensePlates variation="1" characters="EEEEEEEEE-163-UY" colorIndex="1" placementIndex="1"/>
+        <wheels lastWheelConfiguration="1"/>
+        <attacherJoints comboDirection="-1"/>
+        <fillUnit>
+            <unit index="1" fillType="UNKNOWN" fillLevel="0.000000"/>
+        </fillUnit>
+        <cover state="0"/>
+        <sowingMachine selectedSeedFruitType="WHEAT"/>
+    </vehicle>
+    <vehicle filename="data/vehicles/tenwinkel/weight1000/weight1000.xml" id="12" isAbsolute="true" age="0.000000" price="1050.000000" farmId="1" propertyState="1" operatingTime="141.330826">
+        <component index="1" position="707.40301513672 64.576591491699 443.59658813477" rotation="-1.1897185282911 -1.2586661930329 -5.4601902531784"/>
+        <configuration name="baseMaterial" id="7"/>
+        <boughtConfiguration name="baseMaterial" id="7"/>
+        <washable>
+            <dirtNode amount="0.020203"/>
+        </washable>
+        <wearable damage="0.001708">
+            <wearNode amount="0.003788"/>
+        </wearable>
+        <wheels lastWheelConfiguration="1"/>
+        <attacherJoints comboDirection="-1"/>
+    </vehicle>
+    <attachments rootVehicleId="1">
+        <attachment attachmentId="2" inputJointDescIndex="1" jointIndex="1" moveDown="false"/>
+    </attachments>
+    <attachments rootVehicleId="2">
+        <attachment attachmentId="3" inputJointDescIndex="1" jointIndex="1" moveDown="false"/>
+    </attachments>
+    <attachments rootVehicleId="3">
+        <attachment attachmentId="4" inputJointDescIndex="1" jointIndex="1" moveDown="false"/>
+    </attachments>
+    <attachments rootVehicleId="4">
+        <attachment attachmentId="5" inputJointDescIndex="1" jointIndex="1" moveDown="false"/>
+    </attachments>
+    <attachments rootVehicleId="5">
+        <attachment attachmentId="6" inputJointDescIndex="1" jointIndex="1" moveDown="false"/>
+    </attachments>
+    <attachments rootVehicleId="7">
+        <attachment attachmentId="9" inputJointDescIndex="1" jointIndex="1" moveDown="false"/>
+        <attachment attachmentId="12" inputJointDescIndex="1" jointIndex="2" moveDown="false"/>
+    </attachments>
+    <attachments rootVehicleId="10">
+        <attachment attachmentId="11" inputJointDescIndex="1" jointIndex="1" moveDown="true"/>
+    </attachments>
+</vehicles>
