@@ -77,8 +77,7 @@ public class MyEntityService {
             }
 
             // create a new entity with information, save it to repository.
-
-            Vehicles vehicles = new Vehicles(id, brand, model, age, damage, fuel, operatingTime, licensePlate);
+            Vehicles vehicles = new Vehicles(id, name, "100, 50, -256", 1, true, "front-attachment, back-attachment", "FIELDWORK", price, age, damage, fuel, operatingTime, licensePlate);
             myEntityRepository.save(vehicles);
         }
     }
