@@ -1,12 +1,14 @@
 package uk.notnic.fsdashboard.model;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 
 @Entity
 public class Vehicles extends MyEntity {
 
     private String name;
-    private String position;
+    @Embedded
+    private Coordinate position;
     private Integer vehicleId;
     private Boolean driveable;
     private String attachments;
@@ -22,7 +24,7 @@ public class Vehicles extends MyEntity {
 
     }
 
-    public Vehicles(Long id, String name, String position, Integer vehicleId, Boolean driveable, String attachments, String aiLastJob, Double price, Double age, Double damage, Double fuel, Double operatingTime, String licencePlate) {
+    public Vehicles(Long id, String name, Coordinate position, Integer vehicleId, Boolean driveable, String attachments, String aiLastJob, Double price, Double age, Double damage, Double fuel, Double operatingTime, String licencePlate) {
         super(id);
         this.name = name;
         this.position = position;
@@ -42,7 +44,7 @@ public class Vehicles extends MyEntity {
         return name;
     }
 
-    public String getPosition() {
+    public Coordinate getPosition() {
         return position;
     }
 
