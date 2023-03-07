@@ -6,6 +6,7 @@ import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import uk.notnic.fsdashboard.model.Coordinate;
 import uk.notnic.fsdashboard.model.MyEntity;
 import uk.notnic.fsdashboard.model.Vehicles;
 import uk.notnic.fsdashboard.repository.MyEntityRepository;
@@ -77,7 +78,7 @@ public class MyEntityService {
             }
 
             // create a new entity with information, save it to repository.
-            Vehicles vehicles = new Vehicles(id, name, "100, 50, -256", 1, true, "front-attachment, back-attachment", "FIELDWORK", price, age, damage, fuel, operatingTime, licensePlate);
+            Vehicles vehicles = new Vehicles(id, name, new Coordinate().createCoordinate("638.826171875 65.352355957031 277.47668457031"), 1, true, "front-attachment, back-attachment", "FIELDWORK", price, age, damage, fuel, operatingTime, licensePlate);
             myEntityRepository.save(vehicles);
         }
     }
