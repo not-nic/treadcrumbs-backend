@@ -6,7 +6,6 @@ import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import uk.notnic.fsdashboard.model.MyEntity;
 import uk.notnic.fsdashboard.model.Vehicles;
 import uk.notnic.fsdashboard.repository.MyEntityRepository;
@@ -36,7 +35,7 @@ public class MyEntityService {
         myEntityRepository.save(myEntity);
     }
 
-    // creates entity from reading an xml file.
+    // creates entity from reading a xml file.
     public void createEntityFromXML(String filepath) throws DocumentException {
 
         File file = new File(filepath);
@@ -52,8 +51,8 @@ public class MyEntityService {
 
             // Xpath locations of information in vehicles
             Long id = myEntityRepository.count() + 1;
-            String brand = vehicle.valueOf("@filename");
-            String model = vehicle.valueOf("@price");
+            String name = vehicle.valueOf("@filename");
+            Double price = Double.parseDouble(vehicle.valueOf("@price"));
             Double age = Double.parseDouble(vehicle.valueOf("@age"));
             Double operatingTime = Double.parseDouble(vehicle.valueOf("@operatingTime"));
             String licensePlate = vehicle.valueOf("licensePlates/@characters");
