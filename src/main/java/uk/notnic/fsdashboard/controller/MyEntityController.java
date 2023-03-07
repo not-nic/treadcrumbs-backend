@@ -57,7 +57,7 @@ public class MyEntityController {
     public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file ) {
         String fileName = file.getOriginalFilename();
 
-        String filePath = "C:\\Users\\Nick\\IdeaProjects\\fsdashboard\\fs-dashboard\\uploads\\";
+        String filePath = "C:\\Users\\Nick\\IdeaProjects\\fsdashboard\\uploads\\";
 
         System.out.println(setXmlToMatch());
 
@@ -80,7 +80,7 @@ public class MyEntityController {
                         // dummy entity creation on vehicle.
                         myEntityService.createEntityFromXML(filePath + entryName);
 
-                        // implement switch case for each file...
+                        // TODO: implement switch case for each file...
 
                     }
 
