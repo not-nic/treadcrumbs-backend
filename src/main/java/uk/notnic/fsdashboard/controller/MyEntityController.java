@@ -14,7 +14,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -59,8 +58,6 @@ public class MyEntityController {
 
         String filePath = "C:\\Users\\Nick\\IdeaProjects\\fsdashboard\\uploads\\";
 
-        System.out.println(setXmlToMatch());
-
         if (!fileName.endsWith(".zip")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please upload your save game as a zip file.");
         }
@@ -75,9 +72,12 @@ public class MyEntityController {
                     // save uploaded xml files.
                     File outputFile = new File(filePath + entryName);
 
-                    if(entryName.equals(outputFile.getParentFile() + "/vehicles.xml")) {
+                    // get uploaded file name
+                    String[] splitPath = outputFile.toString().split("\\\\");
+                    String directory = splitPath[splitPath.length-2];
 
-                        // dummy entity creation on vehicle.
+                    if(entryName.equals(directory + "/vehicles.xml")) {
+                        // Create dummy entity from vehicle.xml
                         myEntityService.createEntityFromXML(filePath + entryName);
 
                         // TODO: implement switch case for each file...
