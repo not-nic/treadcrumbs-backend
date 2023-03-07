@@ -5,35 +5,65 @@ import javax.persistence.Entity;
 @Entity
 public class Vehicles extends MyEntity {
 
-    private String brand;
-    private String model;
+    private String name;
+    private String position;
+    private Integer vehicleId;
+    private Boolean driveable;
+    private String attachments;
+    private String aiLastJob;
+    private Double price;
     private Double age;
     private Double damage;
     private Double fuel;
     private Double operatingTime;
-    private String numberPlate;
+    private String licencePlate;
 
     public Vehicles() {
 
     }
 
-    public Vehicles(Long id, String brand, String model, Double age, Double damage, Double fuel, Double operatingTime, String numberPlate) {
+    public Vehicles(Long id, String name, String position, Integer vehicleId, Boolean driveable, String attachments, String aiLastJob, Double price, Double age, Double damage, Double fuel, Double operatingTime, String licencePlate) {
         super(id);
-        this.brand = brand;
-        this.model = model;
+        this.name = name;
+        this.position = position;
+        this.vehicleId = vehicleId;
+        this.driveable = driveable;
+        this.attachments = attachments;
+        this.aiLastJob = aiLastJob;
+        this.price = price;
         this.age = age;
         this.damage = damage;
         this.fuel = fuel;
         this.operatingTime = operatingTime;
-        this.numberPlate = numberPlate;
+        this.licencePlate = licencePlate;
     }
 
-    public String getBrand() {
-        return brand;
+    public String getName() {
+        return name;
     }
 
-    public String getModel() {
-        return model;
+    public String getPosition() {
+        return position;
+    }
+
+    public Integer getVehicleId() {
+        return vehicleId;
+    }
+
+    public Boolean getDriveable() {
+        return driveable;
+    }
+
+    public String getAttachments() {
+        return attachments;
+    }
+
+    public String getAiLastJob() {
+        return aiLastJob;
+    }
+
+    public Double getPrice() {
+        return price;
     }
 
     public Double getAge() {
@@ -52,7 +82,7 @@ public class Vehicles extends MyEntity {
         return operatingTime;
     }
 
-    public String getNumberPlate() {
-        return numberPlate;
+    public String getLicencePlate() {
+        return licencePlate;
     }
 }
