@@ -1,5 +1,8 @@
 package uk.notnic.fsdashboard.model;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Coordinate {
     private Double x;
     private Double y;
