@@ -10,7 +10,7 @@ public class Vehicles extends MyEntity {
     @Embedded
     private Coordinate position;
     private Integer vehicleId;
-    private Boolean driveable;
+    private Boolean drivable;
     private String attachments;
     private String aiLastJob;
     private Double price;
@@ -24,12 +24,12 @@ public class Vehicles extends MyEntity {
 
     }
 
-    public Vehicles(Long id, String name, Coordinate position, Integer vehicleId, Boolean driveable, String attachments, String aiLastJob, Double price, Double age, Double damage, Double fuel, Double operatingTime, String licencePlate) {
+    public Vehicles(Long id, String name, Coordinate position, Integer vehicleId, Boolean drivable, String attachments, String aiLastJob, Double price, Double age, Double damage, Double fuel, Double operatingTime, String licencePlate) {
         super(id);
         this.name = name;
         this.position = position;
         this.vehicleId = vehicleId;
-        this.driveable = driveable;
+        this.drivable = drivable;
         this.attachments = attachments;
         this.aiLastJob = aiLastJob;
         this.price = price;
@@ -52,8 +52,8 @@ public class Vehicles extends MyEntity {
         return vehicleId;
     }
 
-    public Boolean getDriveable() {
-        return driveable;
+    public Boolean getDrivable() {
+        return drivable;
     }
 
     public String getAttachments() {
