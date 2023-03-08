@@ -23,7 +23,6 @@ public class MyEntityController {
 
     private final MyEntityService myEntityService;
 
-
     public ArrayList<String> setXmlToMatch() {
         ArrayList<String> xmlToMatch = new ArrayList<String>();
 
@@ -72,18 +71,6 @@ public class MyEntityController {
                     // save uploaded xml files.
                     File outputFile = new File(filePath + entryName);
 
-                    // get uploaded file name
-                    String[] splitPath = outputFile.toString().split("\\\\");
-                    String directory = splitPath[splitPath.length-2];
-
-                    if(entryName.equals(directory + "/vehicles.xml")) {
-                        // Create dummy entity from vehicle.xml
-                        myEntityService.createEntityFromXML(filePath + entryName);
-
-                        // TODO: implement switch case for each file...
-
-                    }
-
                     if (!outputFile.exists()) {
                         outputFile.getParentFile().mkdirs();
                         outputFile.createNewFile();
@@ -95,6 +82,18 @@ public class MyEntityController {
                         while ((len = zipInputStream.read(buffer)) > 0) {
                             out.write(buffer, 0, len);
                         }
+                    }
+
+                    // get uploaded file name
+                    String[] splitPath = outputFile.toString().split("\\\\");
+                    String directory = splitPath[splitPath.length-2];
+
+                    if(entryName.equals(directory + "/vehicles.xml")) {
+                        // Create dummy entity from vehicle.xml
+                        myEntityService.createEntityFromXML(filePath + entryName);
+
+                        // TODO: implement switch case for each file...
+
                     }
                 }
                 else {
