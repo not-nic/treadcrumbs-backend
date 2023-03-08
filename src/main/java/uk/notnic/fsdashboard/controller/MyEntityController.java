@@ -51,6 +51,11 @@ public class MyEntityController {
         return myEntityService.getAllMyEntities();
     }
 
+    @GetMapping("/delete")
+    public void deleteAll() {
+        myEntityService.deleteAllEntities();
+    }
+
     @PostMapping("/upload")
     public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file ) {
         String fileName = file.getOriginalFilename();

@@ -31,6 +31,10 @@ public class MyEntityService {
         return myEntityRepository.findAll();
     }
 
+    public void deleteAllEntities() {
+        myEntityRepository.deleteAll();
+    }
+
     // create entity method
     public void createMyEntity(MyEntity myEntity) {
         myEntityRepository.save(myEntity);
@@ -53,16 +57,18 @@ public class MyEntityService {
             // Xpath locations of information in vehicles
             Long id = myEntityRepository.count() + 1;
             String name = vehicle.valueOf("@filename");
+            String licensePlate = vehicle.valueOf("licensePlates/@characters");
+            String position = vehicle.valueOf("component/@position");
+            String lastJob = vehicle.valueOf("aiJobVehicle/lastJob/@type");
+            Integer vehicleId = Integer.parseInt(vehicle.valueOf("@id"));
             Double price = Double.parseDouble(vehicle.valueOf("@price"));
             Double age = Double.parseDouble(vehicle.valueOf("@age"));
             Double operatingTime = Double.parseDouble(vehicle.valueOf("@operatingTime"));
-            String licensePlate = vehicle.valueOf("licensePlates/@characters");
-
             Double damage;
             Double fuel;
+            Boolean drivable;
 
             // find fuel level of tractor
-
             if (vehicle.valueOf("fillUnit/unit[@fillType='DIESEL']/@fillLevel").equals("") ) {
                 fuel = null;
             } else {
@@ -70,15 +76,20 @@ public class MyEntityService {
             }
 
             // find damage level of tractor
-
             if (vehicle.valueOf("wearable/@damage").equals("")) {
                 damage = null;
             } else {
                 damage = Double.parseDouble(vehicle.valueOf("wearable/@damage"));
             }
 
+            if (!vehicle.valueOf("drivable/@cruiseControl").equals("")) {
+                drivable = true;
+            } else {
+                drivable = false;
+            }
+
             // create a new entity with information, save it to repository.
-            Vehicles vehicles = new Vehicles(id, name, new Coordinate().createCoordinate("638.826171875 65.352355957031 277.47668457031"), 1, true, "front-attachment, back-attachment", "FIELDWORK", price, age, damage, fuel, operatingTime, licensePlate);
+            Vehicles vehicles = new Vehicles(id, name, new Coordinate().createCoordinate(position), vehicleId, drivable, "front-attachment, back-attachment", lastJob, price, age, damage, fuel, operatingTime, licensePlate);
             myEntityRepository.save(vehicles);
         }
     }
