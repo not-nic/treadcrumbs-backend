@@ -6,12 +6,14 @@ import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import uk.notnic.fsdashboard.model.Attachments;
 import uk.notnic.fsdashboard.model.Coordinate;
 import uk.notnic.fsdashboard.model.MyEntity;
 import uk.notnic.fsdashboard.model.Vehicles;
 import uk.notnic.fsdashboard.repository.MyEntityRepository;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -50,6 +52,7 @@ public class MyEntityService {
 
         // look for all tags starting with vehicles
         List<Node> listOfVehicles = document.selectNodes("//vehicles/vehicle");
+        List<Node> listOfAttachments = document.selectNodes("//vehicles/attachments");
 
         // for each vehicle in the vehicles list
         for (Node vehicle : listOfVehicles) {
@@ -67,6 +70,9 @@ public class MyEntityService {
             Double damage;
             Double fuel;
             Boolean drivable;
+
+            ArrayList<Integer> attachments = new ArrayList<>();
+            Attachments currAttachment = new Attachments(vehicleId, attachments);
 
             // find fuel level of tractor
             if (vehicle.valueOf("fillUnit/unit[@fillType='DIESEL']/@fillLevel").equals("") ) {
@@ -88,8 +94,25 @@ public class MyEntityService {
                 drivable = false;
             }
 
+            // vehicle attachments
+            for (Node attachment : listOfAttachments) {
+                if (vehicleId.equals(Integer.parseInt(attachment.valueOf("@rootVehicleId")))) {
+
+                    List<Node> attachmentChildren = attachment.selectNodes("attachment");
+
+                    // loop over multiple nodes
+                    for (Node connectedAttachment : attachmentChildren) {
+                        Integer attachmentId = Integer.parseInt(connectedAttachment.valueOf("@attachmentId"));
+                        attachments.add(attachmentId);
+                    }
+
+                    // create attachment link between the root and its children.
+                    currAttachment.createAttachmentLink(currAttachment);
+                }
+            }
+
             // create a new entity with information, save it to repository.
-            Vehicles vehicles = new Vehicles(id, name, new Coordinate().createCoordinate(position), vehicleId, drivable, "front-attachment, back-attachment", lastJob, price, age, damage, fuel, operatingTime, licensePlate);
+            Vehicles vehicles = new Vehicles(id, name, new Coordinate().createCoordinate(position), vehicleId, drivable, currAttachment, lastJob, price, age, damage, fuel, operatingTime, licensePlate);
             myEntityRepository.save(vehicles);
         }
     }
