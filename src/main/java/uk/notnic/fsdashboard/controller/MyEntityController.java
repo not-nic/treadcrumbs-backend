@@ -72,7 +72,7 @@ public class MyEntityController {
                 String entryName = entry.getName();
 
                 // check file extension is xml
-                if(entryName.endsWith(".xml") && setXmlToMatch().contains(entryName.split("/")[1])) {
+                if (entryName.endsWith(".xml") && setXmlToMatch().contains(entryName.split("/")[1])) {
                     // save uploaded xml files.
                     File outputFile = new File(filePath + entryName);
 
@@ -93,7 +93,7 @@ public class MyEntityController {
                     String[] splitPath = outputFile.toString().split("\\\\");
                     String directory = splitPath[splitPath.length-2];
 
-                    if(entryName.equals(directory + "/vehicles.xml")) {
+                    if (entryName.equals(directory + "/vehicles.xml")) {
                         // Create dummy entity from vehicle.xml
                         myEntityService.createEntityFromXML(filePath + entryName);
 
