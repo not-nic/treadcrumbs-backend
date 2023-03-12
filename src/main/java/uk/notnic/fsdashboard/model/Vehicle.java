@@ -2,9 +2,11 @@ package uk.notnic.fsdashboard.model;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
-public class Vehicles extends MyEntity {
+@Table( name = "vehicles" )
+public class Vehicle extends MyEntity {
 
     private String name;
     @Embedded
@@ -21,11 +23,11 @@ public class Vehicles extends MyEntity {
     private Double operatingTime;
     private String licencePlate;
 
-    public Vehicles() {
+    public Vehicle() {
 
     }
 
-    public Vehicles(Long id, String name, Coordinate position, Integer vehicleId, Boolean drivable, Attachments attachment, String aiLastJob, Double price, Double age, Double damage, Double fuel, Double operatingTime, String licencePlate) {
+    public Vehicle(Long id, String name, Coordinate position, Integer vehicleId, Boolean drivable, Attachments attachment, String aiLastJob, Double price, Double age, Double damage, Double fuel, Double operatingTime, String licencePlate) {
         super(id);
         this.name = name;
         this.position = position;
