@@ -50,12 +50,15 @@ public class VehicleService {
             String licensePlate = vehicle.valueOf("licensePlates/@characters");
             String position = vehicle.valueOf("component/@position");
             String lastJob = vehicle.valueOf("aiJobVehicle/lastJob/@type");
+            String owned;
+            Integer propertyState = Integer.parseInt(vehicle.valueOf("@propertyState"));
             Integer vehicleId = Integer.parseInt(vehicle.valueOf("@id"));
             Double price = Double.parseDouble(vehicle.valueOf("@price"));
             Double age = Double.parseDouble(vehicle.valueOf("@age"));
             Double operatingTime = Double.parseDouble(vehicle.valueOf("@operatingTime"));
             Double damage;
             Double fuel;
+
             Boolean drivable = !vehicle.valueOf("drivable/@cruiseControl").equals("");
 
             ArrayList<Integer> attachments = new ArrayList<>();
@@ -75,7 +78,13 @@ public class VehicleService {
                 damage = Double.parseDouble(vehicle.valueOf("wearable/@damage"));
             }
 
-
+            // get property state of vehicle
+            switch(propertyState) {
+                case 0: owned = "unowned"; break;
+                case 1: owned = "owned"; break;
+                case 2: owned = "leased"; break;
+                default: owned = "unknown";
+            }
 
             // vehicle attachments
             for (Node attachment : listOfAttachments) {
@@ -95,7 +104,7 @@ public class VehicleService {
             }
 
             // create a new entity with information, save it to repository.
-            Vehicle vehicles = new Vehicle(id, name, new Coordinate().createCoordinate(position), vehicleId, drivable, currAttachment, lastJob, price, age, damage, fuel, operatingTime, licensePlate);
+            Vehicle vehicles = new Vehicle(id, name, licensePlate, lastJob, owned, new Coordinate().createCoordinate(position), vehicleId, drivable, currAttachment, price, age, damage, fuel, operatingTime);
             vehicleRepository.save(vehicles);
         }
     }

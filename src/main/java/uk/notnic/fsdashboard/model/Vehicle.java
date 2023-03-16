@@ -9,42 +9,56 @@ import javax.persistence.Table;
 public class Vehicle extends MyEntity {
 
     private String name;
+    private String licencePlate;
+    private String aiLastJob;
+    private String owned;
     @Embedded
     private Coordinate position;
     private Integer vehicleId;
     private Boolean drivable;
     @Embedded
     private Attachments attachment;
-    private String aiLastJob;
     private Double price;
     private Double age;
     private Double damage;
     private Double fuel;
     private Double operatingTime;
-    private String licencePlate;
 
     public Vehicle() {
 
     }
 
-    public Vehicle(Long id, String name, Coordinate position, Integer vehicleId, Boolean drivable, Attachments attachment, String aiLastJob, Double price, Double age, Double damage, Double fuel, Double operatingTime, String licencePlate) {
+    public Vehicle(Long id, String name, String licencePlate, String aiLastJob, String owned, Coordinate position, Integer vehicleId, Boolean drivable, Attachments attachment, Double price, Double age, Double damage, Double fuel, Double operatingTime) {
         super(id);
         this.name = name;
+        this.licencePlate = licencePlate;
+        this.aiLastJob = aiLastJob;
         this.position = position;
         this.vehicleId = vehicleId;
         this.drivable = drivable;
+        this.owned = owned;
         this.attachment = attachment;
-        this.aiLastJob = aiLastJob;
         this.price = price;
         this.age = age;
         this.damage = damage;
         this.fuel = fuel;
         this.operatingTime = operatingTime;
-        this.licencePlate = licencePlate;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getLicencePlate() {
+        return licencePlate;
+    }
+
+    public String getAiLastJob() {
+        return aiLastJob;
+    }
+
+    public String getOwned() {
+        return owned;
     }
 
     public Coordinate getPosition() {
@@ -61,10 +75,6 @@ public class Vehicle extends MyEntity {
 
     public Attachments getAttachment() {
         return attachment;
-    }
-
-    public String getAiLastJob() {
-        return aiLastJob;
     }
 
     public Double getPrice() {
@@ -85,9 +95,5 @@ public class Vehicle extends MyEntity {
 
     public Double getOperatingTime() {
         return operatingTime;
-    }
-
-    public String getLicencePlate() {
-        return licencePlate;
     }
 }
