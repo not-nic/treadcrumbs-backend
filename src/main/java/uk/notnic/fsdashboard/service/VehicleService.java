@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class VehicleService {
+public class VehicleService extends ServiceHelper {
 
     private final VehicleRepository vehicleRepository;
 
@@ -29,7 +29,12 @@ public class VehicleService {
         return vehicleRepository.findAll();
     }
 
+    public void createVehicle(Vehicle vehicle) {
+        vehicleRepository.save(vehicle);
+    }
+
     // creates entity from reading a xml file.
+    @Override
     public void createEntityFromXML(String filepath) throws DocumentException {
 
         File file = new File(filepath);
@@ -108,5 +113,4 @@ public class VehicleService {
             vehicleRepository.save(vehicles);
         }
     }
-
 }
