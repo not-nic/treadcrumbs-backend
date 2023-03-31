@@ -1,8 +1,7 @@
 package uk.notnic.fsdashboard.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.dom4j.DocumentException;
+import org.springframework.web.bind.annotation.*;
 import uk.notnic.fsdashboard.model.Vehicle;
 import uk.notnic.fsdashboard.service.VehicleService;
 
@@ -16,6 +15,12 @@ public class VehicleController {
     public VehicleController(VehicleService vehicleService) {
         this.vehicleService = vehicleService;
     }
+
+    @PostMapping("/add-vehicle")
+    public void createVehicle(@RequestBody Vehicle vehicle) {
+        vehicleService.createVehicle(vehicle);
+    }
+
 
     @GetMapping("/vehicles")
     public List<Vehicle> allVehicles() {
