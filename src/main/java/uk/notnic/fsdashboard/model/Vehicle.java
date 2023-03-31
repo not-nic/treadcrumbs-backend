@@ -1,13 +1,15 @@
 package uk.notnic.fsdashboard.model;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table( name = "vehicles" )
-public class Vehicle extends MyEntity {
+@Table(name = "vehicles")
+@SequenceGenerator(name="vehicle_seq", allocationSize=1)
+public class Vehicle {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vehicle_seq")
+    private Long id;
     private String name;
     private String licencePlate;
     private String aiLastJob;
@@ -29,7 +31,7 @@ public class Vehicle extends MyEntity {
     }
 
     public Vehicle(Long id, String name, String licencePlate, String aiLastJob, String owned, Coordinate position, Integer vehicleId, Boolean drivable, Attachments attachment, Double price, Double age, Double damage, Double fuel, Double operatingTime) {
-        super(id);
+        this.id = id;
         this.name = name;
         this.licencePlate = licencePlate;
         this.aiLastJob = aiLastJob;
@@ -43,6 +45,10 @@ public class Vehicle extends MyEntity {
         this.damage = damage;
         this.fuel = fuel;
         this.operatingTime = operatingTime;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
