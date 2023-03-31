@@ -3,18 +3,20 @@ package uk.notnic.fsdashboard.controller;
 import org.dom4j.DocumentException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import uk.notnic.fsdashboard.model.Career;
+import uk.notnic.fsdashboard.model.Vehicle;
+import uk.notnic.fsdashboard.repository.CareerRepository;
+import uk.notnic.fsdashboard.repository.VehicleRepository;
+import uk.notnic.fsdashboard.service.CareerService;
 import uk.notnic.fsdashboard.service.VehicleService;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -23,9 +25,17 @@ import java.util.zip.ZipInputStream;
 public class UploadController {
 
     private final VehicleService vehicleService;
+    private final CareerService careerService;
+    private final CareerRepository careerRepository;
+    private final VehicleRepository vehicleRepository;
 
-    public UploadController(VehicleService vehicleService) {
+    private String saveGameDirectory;
+
+    public UploadController(VehicleService vehicleService, CareerService careerService, CareerRepository careerRepository, VehicleRepository vehicleRepository) {
         this.vehicleService = vehicleService;
+        this.careerService = careerService;
+        this.careerRepository = careerRepository;
+        this.vehicleRepository = vehicleRepository;
     }
 
     public ArrayList<String> setXmlToMatch() {
@@ -46,10 +56,30 @@ public class UploadController {
         return xmlToMatch;
     }
 
+    @GetMapping("/save-game")
+    public Map<String, Object> getSaveGame() {
+        Map<String, Object> response = new HashMap<>();
+
+        List<Career> career = careerRepository.findAll();
+        List<Vehicle> vehicles = vehicleRepository.findAll();
+
+        response.put("career", career);
+        response.put("vehicles", vehicles);
+
+        return response;
+    }
+
+    public void readFile(String fullPath) throws DocumentException {
+        vehicleService.createEntityFromXML(fullPath + "/vehicles.xml");
+        careerService.createEntityFromXML(fullPath + "/careerSavegame.xml");
+
+        System.out.println("Items added to vehiclesTable: " + vehicleRepository.count() + " | " + "Items added to CareerTable: " + careerRepository.count() );
+    }
+
     @PostMapping("/upload")
     public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file ) {
-        String fileName = file.getOriginalFilename();
 
+        String fileName = file.getOriginalFilename();
         String filePath = "C:\\Users\\Nick\\IdeaProjects\\fsdashboard\\uploads\\";
 
         if (!fileName.endsWith(".zip")) {
@@ -65,6 +95,7 @@ public class UploadController {
                 if (entryName.endsWith(".xml") && setXmlToMatch().contains(entryName.split("/")[1])) {
                     // save uploaded xml files.
                     File outputFile = new File(filePath + entryName);
+                    saveGameDirectory = filePath + entryName.split("/")[0];
 
                     if (!outputFile.exists()) {
                         outputFile.getParentFile().mkdirs();
@@ -78,27 +109,18 @@ public class UploadController {
                             out.write(buffer, 0, len);
                         }
                     }
-
-                    // get uploaded file name
-                    String[] splitPath = outputFile.toString().split("\\\\");
-                    String directory = splitPath[splitPath.length-2];
-
-                    if (entryName.equals(directory + "/vehicles.xml")) {
-                        // Create dummy entity from vehicle.xml
-                        vehicleService.createEntityFromXML(filePath + entryName);
-
-                        // TODO: implement switch case for each file...
-
-                    }
                 }
                 else {
                     System.out.println("Discarding " + entryName);
                 }
             }
+
+            readFile(saveGameDirectory);
+
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         } catch (DocumentException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return ResponseEntity.ok("File read successfully.");
     }
