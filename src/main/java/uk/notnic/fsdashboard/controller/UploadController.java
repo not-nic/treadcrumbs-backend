@@ -6,10 +6,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import uk.notnic.fsdashboard.model.Career;
+import uk.notnic.fsdashboard.model.Farm;
 import uk.notnic.fsdashboard.model.Vehicle;
 import uk.notnic.fsdashboard.repository.CareerRepository;
+import uk.notnic.fsdashboard.repository.FarmRepository;
 import uk.notnic.fsdashboard.repository.VehicleRepository;
 import uk.notnic.fsdashboard.service.CareerService;
+import uk.notnic.fsdashboard.service.FarmService;
 import uk.notnic.fsdashboard.service.VehicleService;
 
 import java.io.File;
@@ -25,17 +28,22 @@ import java.util.zip.ZipInputStream;
 public class UploadController {
 
     private final VehicleService vehicleService;
+    private final VehicleRepository vehicleRepository;
     private final CareerService careerService;
     private final CareerRepository careerRepository;
-    private final VehicleRepository vehicleRepository;
+    private final FarmRepository farmRepository;
+    private final FarmService farmService;
 
     private String saveGameDirectory;
 
-    public UploadController(VehicleService vehicleService, CareerService careerService, CareerRepository careerRepository, VehicleRepository vehicleRepository) {
+    public UploadController(VehicleService vehicleService, VehicleRepository vehicleRepository, CareerService careerService,
+                            CareerRepository careerRepository, FarmRepository farmRepository, FarmService farmService) {
         this.vehicleService = vehicleService;
+        this.vehicleRepository = vehicleRepository;
         this.careerService = careerService;
         this.careerRepository = careerRepository;
-        this.vehicleRepository = vehicleRepository;
+        this.farmRepository = farmRepository;
+        this.farmService = farmService;
     }
 
     public ArrayList<String> setXmlToMatch() {
@@ -62,9 +70,11 @@ public class UploadController {
 
         List<Career> career = careerRepository.findAll();
         List<Vehicle> vehicles = vehicleRepository.findAll();
+        List<Farm> farm = farmRepository.findAll();
 
         response.put("career", career);
         response.put("vehicles", vehicles);
+        response.put("farms", farm);
 
         return response;
     }
@@ -72,8 +82,9 @@ public class UploadController {
     public void readFile(String fullPath) throws DocumentException {
         vehicleService.createEntityFromXML(fullPath + "/vehicles.xml");
         careerService.createEntityFromXML(fullPath + "/careerSavegame.xml");
+        farmService.createEntityFromXML(fullPath + "/farms.xml");
 
-        System.out.println("Items added to vehiclesTable: " + vehicleRepository.count() + " | " + "Items added to CareerTable: " + careerRepository.count() );
+        System.out.println(String.format("Items added to db: %s | %s | %s", vehicleRepository.count(), careerRepository.count(), farmRepository.count()));
     }
 
     @PostMapping("/upload")
