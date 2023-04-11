@@ -50,7 +50,7 @@ public class VehicleService extends ServiceHelper {
         for (Node vehicle : listOfVehicles) {
 
             // Xpath locations of information in vehicles
-            Long id = vehicleRepository.count() + 1;
+            Long id = null;
             String name = vehicle.valueOf("@filename");
             String licensePlate = vehicle.valueOf("licensePlates/@characters");
             String position = vehicle.valueOf("component/@position");
