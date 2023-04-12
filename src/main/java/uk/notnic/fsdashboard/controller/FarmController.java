@@ -15,11 +15,9 @@ import java.util.List;
 public class FarmController {
 
     private final FarmRepository farmRepository;
-    private final FarmService farmService;
 
-    public FarmController(FarmRepository farmRepository, FarmService farmService) {
+    public FarmController(FarmRepository farmRepository) {
         this.farmRepository = farmRepository;
-        this.farmService = farmService;
     }
 
 }
