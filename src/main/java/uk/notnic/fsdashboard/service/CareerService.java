@@ -35,7 +35,7 @@ public class CareerService extends ServiceHelper {
 
         String xmlPath = "//careerSavegame/settings/";
 
-        Long id = careerRepository.count() +1;
+        Long id = null;
         String name = document.valueOf(xmlPath + "savegameName");
         String mapTitle = document.valueOf(xmlPath + "mapTitle");
         Integer difficulty = Integer.parseInt(document.valueOf(xmlPath + "economicDifficulty"));
