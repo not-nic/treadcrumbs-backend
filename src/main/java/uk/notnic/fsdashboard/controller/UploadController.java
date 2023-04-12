@@ -7,12 +7,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import uk.notnic.fsdashboard.model.Career;
 import uk.notnic.fsdashboard.model.Farm;
+import uk.notnic.fsdashboard.model.Statistics;
 import uk.notnic.fsdashboard.model.Vehicle;
 import uk.notnic.fsdashboard.repository.CareerRepository;
 import uk.notnic.fsdashboard.repository.FarmRepository;
+import uk.notnic.fsdashboard.repository.StatisticsRepository;
 import uk.notnic.fsdashboard.repository.VehicleRepository;
 import uk.notnic.fsdashboard.service.CareerService;
 import uk.notnic.fsdashboard.service.FarmService;
+import uk.notnic.fsdashboard.service.StatisticsService;
 import uk.notnic.fsdashboard.service.VehicleService;
 
 import java.io.File;
@@ -33,17 +36,22 @@ public class UploadController {
     private final CareerRepository careerRepository;
     private final FarmRepository farmRepository;
     private final FarmService farmService;
+    private final StatisticsService statisticsService;
+    private final StatisticsRepository statisticsRepository;
 
     private String saveGameDirectory;
 
     public UploadController(VehicleService vehicleService, VehicleRepository vehicleRepository, CareerService careerService,
-                            CareerRepository careerRepository, FarmRepository farmRepository, FarmService farmService) {
+                            CareerRepository careerRepository, FarmRepository farmRepository, FarmService farmService,
+                            StatisticsService statisticsService, StatisticsRepository statisticsRepository) {
         this.vehicleService = vehicleService;
         this.vehicleRepository = vehicleRepository;
         this.careerService = careerService;
         this.careerRepository = careerRepository;
         this.farmRepository = farmRepository;
         this.farmService = farmService;
+        this.statisticsRepository = statisticsRepository;
+        this.statisticsService = statisticsService;
     }
 
     public ArrayList<String> setXmlToMatch() {
@@ -71,10 +79,12 @@ public class UploadController {
         List<Career> career = careerRepository.findAll();
         List<Vehicle> vehicles = vehicleRepository.findAll();
         List<Farm> farm = farmRepository.findAll();
+        List<Statistics> statistics = statisticsRepository.findAll();
 
         response.put("career", career);
         response.put("vehicles", vehicles);
         response.put("farms", farm);
+        response.put("stats", statistics);
 
         return response;
     }
@@ -83,8 +93,12 @@ public class UploadController {
         vehicleService.createEntityFromXML(fullPath + "/vehicles.xml");
         careerService.createEntityFromXML(fullPath + "/careerSavegame.xml");
         farmService.createEntityFromXML(fullPath + "/farms.xml");
+        statisticsService.createEntityFromXML(fullPath + "/farms.xml");
 
-        System.out.println(String.format("Items added to db: %s | %s | %s", vehicleRepository.count(), careerRepository.count(), farmRepository.count()));
+        System.out.println(String.format("Items added to db: %s | %s | %s | %s",
+                vehicleRepository.count(), careerRepository.count(), farmRepository.count(),
+                statisticsRepository.count()
+        ));
     }
 
     @PostMapping("/upload")
