@@ -7,7 +7,6 @@ import org.dom4j.io.SAXReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uk.notnic.fsdashboard.model.Farm;
-import uk.notnic.fsdashboard.model.Vehicle;
 import uk.notnic.fsdashboard.repository.FarmRepository;
 
 import java.io.File;
