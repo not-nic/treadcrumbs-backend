@@ -5,19 +5,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import uk.notnic.fsdashboard.model.Career;
-import uk.notnic.fsdashboard.model.Farm;
-import uk.notnic.fsdashboard.model.Statistics;
-import uk.notnic.fsdashboard.model.Vehicle;
-import uk.notnic.fsdashboard.repository.CareerRepository;
-import uk.notnic.fsdashboard.repository.FarmRepository;
-import uk.notnic.fsdashboard.repository.StatisticsRepository;
-import uk.notnic.fsdashboard.repository.VehicleRepository;
-import uk.notnic.fsdashboard.service.CareerService;
-import uk.notnic.fsdashboard.service.FarmService;
-import uk.notnic.fsdashboard.service.StatisticsService;
-import uk.notnic.fsdashboard.service.VehicleService;
+import uk.notnic.fsdashboard.model.*;
+import uk.notnic.fsdashboard.model.Farm.Farm;
+import uk.notnic.fsdashboard.model.Farm.FinanceStats;
+import uk.notnic.fsdashboard.model.Farm.Statistics;
+import uk.notnic.fsdashboard.model.Fields.Field;
+import uk.notnic.fsdashboard.repository.*;
+import uk.notnic.fsdashboard.service.*;
 
+import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -34,24 +30,29 @@ public class UploadController {
     private final VehicleRepository vehicleRepository;
     private final CareerService careerService;
     private final CareerRepository careerRepository;
-    private final FarmRepository farmRepository;
     private final FarmService farmService;
-    private final StatisticsService statisticsService;
+    private final FarmRepository farmRepository;
     private final StatisticsRepository statisticsRepository;
+    private final FinanceRepository financeRepository;
+    private final FieldService fieldService;
+    private final FieldRepository fieldRepository;
 
     private String saveGameDirectory;
 
     public UploadController(VehicleService vehicleService, VehicleRepository vehicleRepository, CareerService careerService,
-                            CareerRepository careerRepository, FarmRepository farmRepository, FarmService farmService,
-                            StatisticsService statisticsService, StatisticsRepository statisticsRepository) {
+                            CareerRepository careerRepository, FarmService farmService, FarmRepository farmRepository,
+                            StatisticsRepository statisticsRepository, FinanceRepository financeRepository,
+                            FieldService fieldService, FieldRepository fieldRepository) {
         this.vehicleService = vehicleService;
         this.vehicleRepository = vehicleRepository;
         this.careerService = careerService;
         this.careerRepository = careerRepository;
-        this.farmRepository = farmRepository;
         this.farmService = farmService;
+        this.farmRepository = farmRepository;
         this.statisticsRepository = statisticsRepository;
-        this.statisticsService = statisticsService;
+        this.financeRepository = financeRepository;
+        this.fieldService = fieldService;
+        this.fieldRepository = fieldRepository;
     }
 
     public ArrayList<String> setXmlToMatch() {
@@ -78,26 +79,31 @@ public class UploadController {
 
         List<Career> career = careerRepository.findAll();
         List<Vehicle> vehicles = vehicleRepository.findAll();
-        List<Farm> farm = farmRepository.findAll();
-        List<Statistics> statistics = statisticsRepository.findAll();
+        List<Statistics> stats = statisticsRepository.findAll();
+        List<Farm> farms = farmRepository.findAll();
+        List<FinanceStats> finances = financeRepository.findAll();
+        List<Field> fields = fieldRepository.findAll();
 
         response.put("career", career);
         response.put("vehicles", vehicles);
-        response.put("farms", farm);
-        response.put("stats", statistics);
+        response.put("stats", stats);
+        response.put("farms", farms);
+        response.put("finances", finances);
+        response.put("fields", fields);
 
         return response;
     }
 
-    public void readFile(String fullPath) throws DocumentException {
+    public void readFile(String fullPath) throws DocumentException, JAXBException {
         vehicleService.createEntityFromXML(fullPath + "/vehicles.xml");
         careerService.createEntityFromXML(fullPath + "/careerSavegame.xml");
         farmService.createEntityFromXML(fullPath + "/farms.xml");
-        statisticsService.createEntityFromXML(fullPath + "/farms.xml");
+        fieldService.createEntityFromXML(fullPath + "/fields.xml");
 
-        System.out.println(String.format("Items added to db: %s | %s | %s | %s",
+
+        System.out.println(String.format("Items added to db: %s | %s | %s | %s | %s",
                 vehicleRepository.count(), careerRepository.count(), farmRepository.count(),
-                statisticsRepository.count()
+                financeRepository.count(), statisticsRepository.count(), fieldRepository.count()
         ));
     }
 
@@ -144,7 +150,7 @@ public class UploadController {
 
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        } catch (DocumentException e) {
+        } catch (DocumentException | JAXBException e) {
             throw new RuntimeException(e);
         }
         return ResponseEntity.ok("File read successfully.");
