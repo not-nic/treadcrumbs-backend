@@ -1,62 +1,54 @@
 package uk.notnic.fsdashboard.service;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Node;
-import org.dom4j.io.SAXReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uk.notnic.fsdashboard.model.Farm;
+import uk.notnic.fsdashboard.model.Farm.Farm;
+import uk.notnic.fsdashboard.model.Farm.Farms;
+import uk.notnic.fsdashboard.model.Farm.FinanceStats;
+import uk.notnic.fsdashboard.model.Farm.Statistics;
 import uk.notnic.fsdashboard.repository.FarmRepository;
+import uk.notnic.fsdashboard.repository.FinanceRepository;
+import uk.notnic.fsdashboard.repository.StatisticsRepository;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.util.List;
 
 @Service
 public class FarmService extends ServiceHelper {
-
     private final FarmRepository farmRepository;
+    private final FinanceRepository financeRepository;
+    private final StatisticsRepository statisticsRepository;
 
     @Autowired
-    public FarmService(FarmRepository farmRepository) {
+    public FarmService(FarmRepository farmRepository, FinanceRepository financeRepository, StatisticsRepository statisticsRepository) {
         this.farmRepository = farmRepository;
+        this.financeRepository = financeRepository;
+        this.statisticsRepository = statisticsRepository;
     }
 
     public List<Farm> getAllFarms() {
         return farmRepository.findAll();
     }
 
-    public void createFarm(Farm farm) {
-        farmRepository.save(farm);
-    }
-
     @Override
-    public void createEntityFromXML(String filepath) throws DocumentException {
-
+    public void createEntityFromXML(String filepath) throws JAXBException {
         File file = new File(filepath);
 
-        SAXReader reader = new SAXReader();
-        Document document = reader.read(file);
+        JAXBContext jaxbContext = JAXBContext.newInstance(Farms.class);
+        Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+        Farms farms = (Farms) jaxbUnmarshaller.unmarshal(file);
+        Farm farm = farms.getFarm();
+        Statistics statistics = farms.getFarm().getStatistics();
 
-        List<Node> listOfFarms = document.selectNodes("//farms/farm");
+        farmRepository.save(farm);
+        statisticsRepository.save(statistics);
 
-        for (Node farm : listOfFarms) {
-
-            Long id = null;
-            Integer farmId = Integer.parseInt(farm.valueOf("@farmId"));
-            String farmName = farm.valueOf("@name");
-            String userId = "player";
-            String playerName = "name";
-            Double loan = Double.parseDouble(farm.valueOf("@loan"));
-            Double money = Double.parseDouble(farm.valueOf("@money"));
-
-            for (Node player : farm.selectNodes("/players")) {
-                userId = player.valueOf("@uniqueUserId");
-                playerName = player.valueOf("@lastNickname");
-            }
-
-            Farm farmEntity = new Farm(id, farmId, farmName, userId, playerName, loan, money);
-            farmRepository.save(farmEntity);
+        for (FinanceStats day : farms.getFarm().getFinances().getFinanceStatsList()) {
+            financeRepository.save(day);
         }
     }
+
 }
