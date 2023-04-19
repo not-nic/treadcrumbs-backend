@@ -33,7 +33,6 @@ public class FieldService extends ServiceHelper {
         Fields fields = (Fields) jaxbUnmarshaller.unmarshal(file);
 
         for (Field field : fields.getFields()) {
-            System.out.println("Planned Fruit: " + field.getPlannedFruit());
             Field newField = new Field(field.getPlannedFruit());
             fieldRepository.save(newField);
         }

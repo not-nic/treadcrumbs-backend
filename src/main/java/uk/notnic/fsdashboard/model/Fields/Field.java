@@ -17,7 +17,6 @@ public class Field {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "field_seq")
     private Long id;
 
-
     @XmlAttribute(name = "plannedFruit")
     private String plannedFruit;
 
@@ -31,7 +30,6 @@ public class Field {
     public Long getId() {
         return id;
     }
-
 
     public String getPlannedFruit() {
         return plannedFruit;
