@@ -1,10 +1,9 @@
-package uk.notnic.fsdashboard.model.Farm;
+package uk.notnic.fsdashboard.model.Farms;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.List;
 
 @XmlRootElement(name = "farms")
 @XmlAccessorType(XmlAccessType.FIELD)

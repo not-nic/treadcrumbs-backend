@@ -1,4 +1,4 @@
-package uk.notnic.fsdashboard.model.Farm;
+package uk.notnic.fsdashboard.model.Farms;
 
 
 import javax.persistence.Embeddable;

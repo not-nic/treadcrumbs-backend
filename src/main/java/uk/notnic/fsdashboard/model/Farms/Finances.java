@@ -1,11 +1,10 @@
-package uk.notnic.fsdashboard.model.Farm;
+package uk.notnic.fsdashboard.model.Farms;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
-import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Embeddable

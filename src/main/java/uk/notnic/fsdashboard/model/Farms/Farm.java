@@ -1,4 +1,6 @@
-package uk.notnic.fsdashboard.model.Farm;
+package uk.notnic.fsdashboard.model.Farms;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
@@ -29,10 +31,12 @@ public class Farm {
 
     @XmlElement(name = "statistics")
     @Transient
+    @JsonIgnore
     private Statistics statistics;
 
     @XmlElement(name = "finances")
     @Transient
+    @JsonIgnore
     private Finances finances;
 
     public Farm() {

@@ -1,9 +1,8 @@
-package uk.notnic.fsdashboard.model.Farm;
+package uk.notnic.fsdashboard.model.Farms;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import java.io.Serializable;
 
