@@ -2,10 +2,10 @@ package uk.notnic.fsdashboard.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uk.notnic.fsdashboard.model.Farm.Farm;
-import uk.notnic.fsdashboard.model.Farm.Farms;
-import uk.notnic.fsdashboard.model.Farm.FinanceStats;
-import uk.notnic.fsdashboard.model.Farm.Statistics;
+import uk.notnic.fsdashboard.model.Farms.Farm;
+import uk.notnic.fsdashboard.model.Farms.Farms;
+import uk.notnic.fsdashboard.model.Farms.FinanceStats;
+import uk.notnic.fsdashboard.model.Farms.Statistics;
 import uk.notnic.fsdashboard.repository.FarmRepository;
 import uk.notnic.fsdashboard.repository.FinanceRepository;
 import uk.notnic.fsdashboard.repository.StatisticsRepository;

@@ -2,7 +2,7 @@ package uk.notnic.fsdashboard.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import uk.notnic.fsdashboard.model.Farm.Farm;
+import uk.notnic.fsdashboard.model.Farms.Farm;
 
 import java.util.List;
 

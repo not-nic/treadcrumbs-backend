@@ -6,10 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import uk.notnic.fsdashboard.model.*;
-import uk.notnic.fsdashboard.model.Farm.Farm;
-import uk.notnic.fsdashboard.model.Farm.FinanceStats;
-import uk.notnic.fsdashboard.model.Farm.Statistics;
+import uk.notnic.fsdashboard.model.Farms.Farm;
+import uk.notnic.fsdashboard.model.Farms.FinanceStats;
+import uk.notnic.fsdashboard.model.Farms.Statistics;
 import uk.notnic.fsdashboard.model.Fields.Field;
+import uk.notnic.fsdashboard.model.Vehicles.Implement;
+import uk.notnic.fsdashboard.model.Vehicles.Tractor;
 import uk.notnic.fsdashboard.repository.*;
 import uk.notnic.fsdashboard.service.*;
 
@@ -27,7 +29,6 @@ import java.util.zip.ZipInputStream;
 public class UploadController {
 
     private final VehicleService vehicleService;
-    private final VehicleRepository vehicleRepository;
     private final CareerService careerService;
     private final CareerRepository careerRepository;
     private final FarmService farmService;
@@ -36,15 +37,16 @@ public class UploadController {
     private final FinanceRepository financeRepository;
     private final FieldService fieldService;
     private final FieldRepository fieldRepository;
+    private final ImplementRepository implementRepository;
+    private final TractorRepository tractorRepository;
 
     private String saveGameDirectory;
 
-    public UploadController(VehicleService vehicleService, VehicleRepository vehicleRepository, CareerService careerService,
-                            CareerRepository careerRepository, FarmService farmService, FarmRepository farmRepository,
-                            StatisticsRepository statisticsRepository, FinanceRepository financeRepository,
-                            FieldService fieldService, FieldRepository fieldRepository) {
+    public UploadController(VehicleService vehicleService, CareerService careerService, CareerRepository careerRepository,
+                            FarmService farmService, FarmRepository farmRepository, StatisticsRepository statisticsRepository,
+                            FinanceRepository financeRepository, FieldService fieldService, FieldRepository fieldRepository,
+                            ImplementRepository implementRepository, TractorRepository tractorRepository) {
         this.vehicleService = vehicleService;
-        this.vehicleRepository = vehicleRepository;
         this.careerService = careerService;
         this.careerRepository = careerRepository;
         this.farmService = farmService;
@@ -53,6 +55,8 @@ public class UploadController {
         this.financeRepository = financeRepository;
         this.fieldService = fieldService;
         this.fieldRepository = fieldRepository;
+        this.implementRepository = implementRepository;
+        this.tractorRepository = tractorRepository;
     }
 
     public ArrayList<String> setXmlToMatch() {
@@ -78,14 +82,16 @@ public class UploadController {
         Map<String, Object> response = new HashMap<>();
 
         List<Career> career = careerRepository.findAll();
-        List<Vehicle> vehicles = vehicleRepository.findAll();
+        List<Implement> implement = implementRepository.findAll();
+        List<Tractor> tractor = tractorRepository.findAll();
         List<Statistics> stats = statisticsRepository.findAll();
         List<Farm> farms = farmRepository.findAll();
         List<FinanceStats> finances = financeRepository.findAll();
         List<Field> fields = fieldRepository.findAll();
 
         response.put("career", career);
-        response.put("vehicles", vehicles);
+        response.put("implements", implement);
+        response.put("tractors", tractor);
         response.put("stats", stats);
         response.put("farms", farms);
         response.put("finances", finances);
@@ -102,7 +108,7 @@ public class UploadController {
 
 
         System.out.println(String.format("Items added to db: %s | %s | %s | %s | %s",
-                vehicleRepository.count(), careerRepository.count(), farmRepository.count(),
+                careerRepository.count(), farmRepository.count(),
                 financeRepository.count(), statisticsRepository.count(), fieldRepository.count()
         ));
     }

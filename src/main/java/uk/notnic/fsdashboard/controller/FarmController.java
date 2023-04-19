@@ -3,8 +3,7 @@ package uk.notnic.fsdashboard.controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uk.notnic.fsdashboard.model.Farm.Farm;
-import uk.notnic.fsdashboard.model.Fields.Field;
+import uk.notnic.fsdashboard.model.Farms.Farm;
 import uk.notnic.fsdashboard.service.FarmService;
 
 import javax.xml.bind.JAXBException;
