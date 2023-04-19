@@ -6,10 +6,10 @@ import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uk.notnic.fsdashboard.model.Attachments;
+import uk.notnic.fsdashboard.model.Vehicles.*;
 import uk.notnic.fsdashboard.model.Coordinate;
-import uk.notnic.fsdashboard.model.Vehicle;
-import uk.notnic.fsdashboard.repository.VehicleRepository;
+import uk.notnic.fsdashboard.repository.ImplementRepository;
+import uk.notnic.fsdashboard.repository.TractorRepository;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,19 +18,31 @@ import java.util.List;
 @Service
 public class VehicleService extends ServiceHelper {
 
-    private final VehicleRepository vehicleRepository;
+    private final TractorRepository tractorRepository;
+    private final ImplementRepository implementRepository;
 
     @Autowired
-    public VehicleService(VehicleRepository vehicleRepository) {
-        this.vehicleRepository = vehicleRepository;
+    public VehicleService(TractorRepository tractorRepository, ImplementRepository implementRepository) {
+        this.tractorRepository = tractorRepository;
+        this.implementRepository = implementRepository;
     }
 
     public List<Vehicle> getAllVehicles() {
-        return vehicleRepository.findAll();
+//        TODO: Return all vehicles & implements
+        return null;
+    }
+
+    public List<Implement> getAllImplements() {
+        return implementRepository.findAll();
+    }
+
+    public List<Tractor> getAllTractors() {
+        return tractorRepository.findAll();
     }
 
     public void createVehicle(Vehicle vehicle) {
-        vehicleRepository.save(vehicle);
+//        TODO: Create Tractor instead of vehicle.
+//        vehicleRepository.save(vehicle);
     }
 
     // creates entity from reading a xml file.
@@ -55,15 +67,23 @@ public class VehicleService extends ServiceHelper {
             String licensePlate = vehicle.valueOf("licensePlates/@characters");
             String position = vehicle.valueOf("component/@position");
             String lastJob = vehicle.valueOf("aiJobVehicle/lastJob/@type");
+            String selectedFruitType = vehicle.valueOf("sowingMachine/@selectedSeedFruitType");
+
             String owned;
             Integer propertyState = Integer.parseInt(vehicle.valueOf("@propertyState"));
             Integer vehicleId = Integer.parseInt(vehicle.valueOf("@id"));
+            Integer farmId = Integer.parseInt(vehicle.valueOf("@farmId"));
             Double price = Double.parseDouble(vehicle.valueOf("@price"));
             Double age = Double.parseDouble(vehicle.valueOf("@age"));
             Double operatingTime = Double.parseDouble(vehicle.valueOf("@operatingTime"));
             Double damage;
             Double fuel;
 
+            FillUnit fillUnit = new FillUnit();
+            ArrayList<FillUnit.Unit> units = new ArrayList<>();
+            FillUnit.Unit unit;
+
+            Boolean sowingMachine = !vehicle.valueOf("sowingMachine").equals(null);
             Boolean drivable = !vehicle.valueOf("drivable/@cruiseControl").equals("");
 
             ArrayList<Integer> attachments = new ArrayList<>();
@@ -91,6 +111,21 @@ public class VehicleService extends ServiceHelper {
                 default: owned = "unknown";
             }
 
+            for (Node vehicleUnit : vehicle.selectNodes("fillUnit/*")) {
+                String fillType = vehicleUnit.valueOf("@fillUnit");
+                Double fillLevel;
+
+                if (vehicleUnit.valueOf("@fillLevel").equals("")) {
+                    fillLevel = 0.0;
+                } else {
+                    fillLevel = Double.parseDouble(vehicleUnit.valueOf("@fillLevel"));
+                }
+
+                unit = new FillUnit.Unit(fillType, fillLevel);
+                units.add(unit);
+                fillUnit.setUnits(units);
+            }
+
             // vehicle attachments
             for (Node attachment : listOfAttachments) {
                 if (vehicleId.equals(Integer.parseInt(attachment.valueOf("@rootVehicleId")))) {
@@ -108,9 +143,17 @@ public class VehicleService extends ServiceHelper {
                 }
             }
 
-            // create a new entity with information, save it to repository.
-            Vehicle vehicles = new Vehicle(id, name, licensePlate, lastJob, owned, new Coordinate().createCoordinate(position), vehicleId, drivable, currAttachment, price, age, damage, fuel, operatingTime);
-            vehicleRepository.save(vehicles);
+            if (drivable.equals(true)) {
+                // create a new entity with information, save it to repository.
+                Tractor tractor = new Tractor(id, name, owned, age, price, operatingTime, damage, farmId,
+                        new Coordinate().createCoordinate(position), licensePlate, lastJob, fuel, currAttachment);
+                tractorRepository.save(tractor);
+            } else if (sowingMachine) {
+                // create a new entity with information, save it to repository.
+                Implement implement = new Implement(id, name, owned, age, price, operatingTime, damage, farmId,
+                        new Coordinate().createCoordinate(position), selectedFruitType, fillUnit);
+                implementRepository.save(implement);
+            }
         }
     }
 }
