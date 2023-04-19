@@ -1,6 +1,9 @@
-package uk.notnic.fsdashboard.model;
+package uk.notnic.fsdashboard.model.Vehicles;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +11,8 @@ import java.util.Map;
 @Embeddable
 public class Attachments {
 
+    @Transient
+    @JsonIgnore
     private Integer rootVehicleId;
     private ArrayList<Integer> attachmentIds;
 
@@ -33,10 +38,10 @@ public class Attachments {
     }
 
     public HashMap<Integer, ArrayList<Integer>> createAttachmentLink(Attachments attachment) {
-        Map<Integer, ArrayList<Integer>> link = new HashMap<>() {{
+        HashMap<Integer, ArrayList<Integer>> link = new HashMap<>() {{
             put(attachment.getRootVehicleId(), attachment.getAttachmentIds());
         }};
 
-        return (HashMap<Integer, ArrayList<Integer>>) link;
+        return link;
     }
 }
