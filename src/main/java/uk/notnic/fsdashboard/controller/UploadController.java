@@ -10,6 +10,7 @@ import uk.notnic.fsdashboard.model.Farms.Farm;
 import uk.notnic.fsdashboard.model.Farms.FinanceStats;
 import uk.notnic.fsdashboard.model.Farms.Statistics;
 import uk.notnic.fsdashboard.model.Fields.Field;
+import uk.notnic.fsdashboard.model.Sales.Item;
 import uk.notnic.fsdashboard.model.Vehicles.Implement;
 import uk.notnic.fsdashboard.model.Vehicles.Tractor;
 import uk.notnic.fsdashboard.repository.*;
@@ -39,13 +40,16 @@ public class UploadController {
     private final FieldRepository fieldRepository;
     private final ImplementRepository implementRepository;
     private final TractorRepository tractorRepository;
+    private final SalesRepository salesRepository;
+    private final SalesService salesService;
 
     private String saveGameDirectory;
 
     public UploadController(VehicleService vehicleService, CareerService careerService, CareerRepository careerRepository,
                             FarmService farmService, FarmRepository farmRepository, StatisticsRepository statisticsRepository,
                             FinanceRepository financeRepository, FieldService fieldService, FieldRepository fieldRepository,
-                            ImplementRepository implementRepository, TractorRepository tractorRepository) {
+                            ImplementRepository implementRepository, TractorRepository tractorRepository,
+                            SalesRepository salesRepository, SalesService salesService) {
         this.vehicleService = vehicleService;
         this.careerService = careerService;
         this.careerRepository = careerRepository;
@@ -57,6 +61,8 @@ public class UploadController {
         this.fieldRepository = fieldRepository;
         this.implementRepository = implementRepository;
         this.tractorRepository = tractorRepository;
+        this.salesRepository = salesRepository;
+        this.salesService = salesService;
     }
 
     public ArrayList<String> setXmlToMatch() {
@@ -88,6 +94,7 @@ public class UploadController {
         List<Farm> farms = farmRepository.findAll();
         List<FinanceStats> finances = financeRepository.findAll();
         List<Field> fields = fieldRepository.findAll();
+        List<Item> sales = salesRepository.findAll();
 
         response.put("career", career);
         response.put("implements", implement);
@@ -96,6 +103,7 @@ public class UploadController {
         response.put("farms", farms);
         response.put("finances", finances);
         response.put("fields", fields);
+        response.put("sales", sales);
 
         return response;
     }
@@ -105,11 +113,13 @@ public class UploadController {
         careerService.createEntityFromXML(fullPath + "/careerSavegame.xml");
         farmService.createEntityFromXML(fullPath + "/farms.xml");
         fieldService.createEntityFromXML(fullPath + "/fields.xml");
+        salesService.createEntityFromXML(fullPath + "/sales.xml");
 
 
-        System.out.println(String.format("Items added to db: %s | %s | %s | %s | %s",
+        System.out.println(String.format("Items added to db: %s | %s | %s | %s | %s | %s",
                 careerRepository.count(), farmRepository.count(),
-                financeRepository.count(), statisticsRepository.count(), fieldRepository.count()
+                financeRepository.count(), statisticsRepository.count(), fieldRepository.count(),
+                salesRepository.count()
         ));
     }
 
