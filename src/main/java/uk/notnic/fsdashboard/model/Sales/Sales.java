@@ -11,20 +11,20 @@ import java.util.List;
 public class Sales {
 
     @XmlElement(name = "item")
-    private List<Item> item;
+    private List<Sale> sale;
 
     public Sales() {
     }
 
-    public Sales(List<Item> item) {
-        this.item = item;
+    public Sales(List<Sale> sale) {
+        this.sale = sale;
     }
 
-    public List<Item> getItems() {
-        return item;
+    public List<Sale> getItems() {
+        return sale;
     }
 
-    public void setItem(List<Item> item) {
-        this.item = item;
+    public void setItem(List<Sale> sale) {
+        this.sale = sale;
     }
 }

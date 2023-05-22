@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @SequenceGenerator(name = "sale_seq", allocationSize = 1)
 @XmlRootElement(name = "item")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Item {
+public class Sale {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sale_seq")
@@ -32,10 +32,10 @@ public class Item {
     @XmlAttribute(name = "operatingTime")
     private Double operatingTime;
 
-    public Item() {
+    public Sale() {
     }
 
-    public Item(Long id, Integer timeLeft, String name, Double age, Double price,
+    public Sale(Long id, Integer timeLeft, String name, Double age, Double price,
                 Double damage, Double wear, Double operatingTime) {
         this.id = id;
         this.timeLeft = timeLeft;
