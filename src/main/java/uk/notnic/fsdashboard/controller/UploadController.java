@@ -10,7 +10,7 @@ import uk.notnic.fsdashboard.model.Farms.Farm;
 import uk.notnic.fsdashboard.model.Farms.FinanceStats;
 import uk.notnic.fsdashboard.model.Farms.Statistics;
 import uk.notnic.fsdashboard.model.Fields.Field;
-import uk.notnic.fsdashboard.model.Sales.Item;
+import uk.notnic.fsdashboard.model.Sales.Sale;
 import uk.notnic.fsdashboard.model.Vehicles.Implement;
 import uk.notnic.fsdashboard.model.Vehicles.Tractor;
 import uk.notnic.fsdashboard.repository.*;
@@ -94,7 +94,7 @@ public class UploadController {
         List<Farm> farms = farmRepository.findAll();
         List<FinanceStats> finances = financeRepository.findAll();
         List<Field> fields = fieldRepository.findAll();
-        List<Item> sales = salesRepository.findAll();
+        List<Sale> sales = salesRepository.findAll();
 
         response.put("career", career);
         response.put("implements", implement);

@@ -2,7 +2,7 @@ package uk.notnic.fsdashboard.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uk.notnic.fsdashboard.model.Sales.Item;
+import uk.notnic.fsdashboard.model.Sales.Sale;
 import uk.notnic.fsdashboard.model.Sales.Sales;
 import uk.notnic.fsdashboard.repository.SalesRepository;
 
@@ -21,7 +21,7 @@ public class SalesService extends ServiceHelper {
         this.salesRepository = salesRepository;
     }
 
-    public List<Item> getAllSales() {
+    public List<Sale> getAllSales() {
         return salesRepository.findAll();
     }
 
@@ -33,9 +33,9 @@ public class SalesService extends ServiceHelper {
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
         Sales sales = (Sales) jaxbUnmarshaller.unmarshal(file);
 
-        for (Item salesItem : sales.getItems()) {
-            Item newSale = new Item(null, salesItem.getTimeLeft(), salesItem.getName(), salesItem.getAge(),
-                    salesItem.getPrice(), salesItem.getDamage(), salesItem.getWear(), salesItem.getOperatingTime());
+        for (Sale salesSale : sales.getItems()) {
+            Sale newSale = new Sale(null, salesSale.getTimeLeft(), salesSale.getName(), salesSale.getAge(),
+                    salesSale.getPrice(), salesSale.getDamage(), salesSale.getWear(), salesSale.getOperatingTime());
             salesRepository.save(newSale);
         }
     }

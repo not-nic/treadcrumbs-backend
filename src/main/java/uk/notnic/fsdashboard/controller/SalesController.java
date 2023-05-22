@@ -1,10 +1,9 @@
 package uk.notnic.fsdashboard.controller;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uk.notnic.fsdashboard.model.Sales.Item;
+import uk.notnic.fsdashboard.model.Sales.Sale;
 import uk.notnic.fsdashboard.service.SalesService;
 
 import javax.xml.bind.JAXBException;
@@ -26,7 +25,7 @@ public class SalesController {
     }
 
     @GetMapping("/sales")
-    public List<Item> allSalesItems() {
+    public List<Sale> allSalesItems() {
         return salesService.getAllSales();
     }
 }
