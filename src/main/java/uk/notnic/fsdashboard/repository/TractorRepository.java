@@ -9,4 +9,7 @@ import java.util.List;
 @Repository
 public interface TractorRepository extends CrudRepository<Tractor, Long> {
     List<Tractor> findAll();
+
+    List<Tractor> findAllByFarmIdEquals(Integer farmId);
+
 }
