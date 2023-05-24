@@ -1,5 +1,6 @@
 package uk.notnic.fsdashboard.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,7 @@ public class ItemController {
     public void testItems() throws JAXBException {
         itemService.createEntityFromXML("C:\\Users\\Nick\\IdeaProjects\\fsdashboard\\uploads\\savegame3/items.xml");
     }
+
     @GetMapping("/bales")
     public List<Bale> getAllBales() {
         return itemService.getAllBales();
