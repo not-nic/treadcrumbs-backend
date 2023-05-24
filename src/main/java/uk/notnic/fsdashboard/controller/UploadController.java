@@ -6,10 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import uk.notnic.fsdashboard.model.*;
+import uk.notnic.fsdashboard.model.Contracts.Mission;
 import uk.notnic.fsdashboard.model.Farms.Farm;
 import uk.notnic.fsdashboard.model.Farms.FinanceStats;
 import uk.notnic.fsdashboard.model.Farms.Statistics;
 import uk.notnic.fsdashboard.model.Fields.Field;
+import uk.notnic.fsdashboard.model.Items.Bale;
 import uk.notnic.fsdashboard.model.Sales.Sale;
 import uk.notnic.fsdashboard.model.Vehicles.Implement;
 import uk.notnic.fsdashboard.model.Vehicles.Tractor;
@@ -42,6 +44,10 @@ public class UploadController {
     private final TractorRepository tractorRepository;
     private final SalesRepository salesRepository;
     private final SalesService salesService;
+    private final BaleRepository baleRepository;
+    private final ItemService itemService;
+    private final ContractService contractService;
+    private final ContractRepository contractRepository;
 
     private String saveGameDirectory;
 
@@ -49,7 +55,8 @@ public class UploadController {
                             FarmService farmService, FarmRepository farmRepository, StatisticsRepository statisticsRepository,
                             FinanceRepository financeRepository, FieldService fieldService, FieldRepository fieldRepository,
                             ImplementRepository implementRepository, TractorRepository tractorRepository,
-                            SalesRepository salesRepository, SalesService salesService) {
+                            SalesRepository salesRepository, SalesService salesService, BaleRepository baleRepository,
+                            ItemService itemService, ContractService contractService, ContractRepository contractRepository) {
         this.vehicleService = vehicleService;
         this.careerService = careerService;
         this.careerRepository = careerRepository;
@@ -63,6 +70,10 @@ public class UploadController {
         this.tractorRepository = tractorRepository;
         this.salesRepository = salesRepository;
         this.salesService = salesService;
+        this.baleRepository = baleRepository;
+        this.itemService = itemService;
+        this.contractService = contractService;
+        this.contractRepository = contractRepository;
     }
 
     public ArrayList<String> setXmlToMatch() {
@@ -95,6 +106,8 @@ public class UploadController {
         List<FinanceStats> finances = financeRepository.findAll();
         List<Field> fields = fieldRepository.findAll();
         List<Sale> sales = salesRepository.findAll();
+        List<Bale> bales = baleRepository.findAll();
+        List<Mission> contracts = contractRepository.findAll();
 
         response.put("career", career);
         response.put("implements", implement);
@@ -104,6 +117,8 @@ public class UploadController {
         response.put("finances", finances);
         response.put("fields", fields);
         response.put("sales", sales);
+        response.put("items", bales);
+        response.put("contracts", contracts);
 
         return response;
     }
@@ -114,12 +129,13 @@ public class UploadController {
         farmService.createEntityFromXML(fullPath + "/farms.xml");
         fieldService.createEntityFromXML(fullPath + "/fields.xml");
         salesService.createEntityFromXML(fullPath + "/sales.xml");
+        itemService.createEntityFromXML(fullPath + "/items.xml");
+        contractService.createEntityFromXML(fullPath + "/missions.xml");
 
-
-        System.out.println(String.format("Items added to db: %s | %s | %s | %s | %s | %s",
+        System.out.println(String.format("Items added to db: %s | %s | %s | %s | %s | %s | %s | %s",
                 careerRepository.count(), farmRepository.count(),
                 financeRepository.count(), statisticsRepository.count(), fieldRepository.count(),
-                salesRepository.count()
+                salesRepository.count(), baleRepository.count(), contractRepository.count()
         ));
     }
 
@@ -128,6 +144,7 @@ public class UploadController {
 
         String fileName = file.getOriginalFilename();
         String filePath = "C:\\Users\\Nick\\IdeaProjects\\fsdashboard\\uploads\\";
+        int uploadedFiles = 0;
 
         if (!fileName.endsWith(".zip")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please upload your save game as a zip file.");
@@ -155,6 +172,7 @@ public class UploadController {
                         while ((len = zipInputStream.read(buffer)) > 0) {
                             out.write(buffer, 0, len);
                         }
+                        uploadedFiles++;
                     }
                 }
                 else {
@@ -169,6 +187,6 @@ public class UploadController {
         } catch (DocumentException | JAXBException e) {
             throw new RuntimeException(e);
         }
-        return ResponseEntity.ok("File read successfully.");
+        return ResponseEntity.ok(String.format("%s files uploaded successfully.", uploadedFiles));
     }
 }
