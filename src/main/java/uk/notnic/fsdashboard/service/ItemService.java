@@ -47,26 +47,32 @@ public class ItemService extends ServiceHelper {
         int grassCounter = 0;
         int silageCounter = 0;
 
-        for (Item item : items.getItems()) {
-            // change coordinate gathered from XML file from string to Coordinate class
-            item.setPosition(new Coordinate().createCoordinate(item.getPos()));
+        try {
+            for (Item item : items.getItems()) {
+                // change coordinate gathered from XML file from string to Coordinate class
+                item.setPosition(new Coordinate().createCoordinate(item.getPos()));
 
-            // check if the class name is of type Bale
-            if (item.getClassName().equals("Bale")) {
+                // check if the class name is of type Bale
+                if (item.getClassName().equals("Bale")) {
 
-                switch (item.getFillType()) {
-                    case "STRAW": totalStrawFillLevel += item.getFillLevel(); strawCounter++; break;
-                    case "DRYGRASS_WINDROW": totalHayFilLevel += item.getFillLevel(); hayCounter++; break;
-                    case "GRASS": totalGrassFillLevel += item.getFillLevel(); grassCounter++; break;
-                    case "SILAGE": totalSilageFillLevel += item.getFillLevel(); silageCounter++; break;
+                    switch (item.getFillType()) {
+                        case "STRAW": totalStrawFillLevel += item.getFillLevel(); strawCounter++; break;
+                        case "DRYGRASS_WINDROW": totalHayFilLevel += item.getFillLevel(); hayCounter++; break;
+                        case "GRASS": totalGrassFillLevel += item.getFillLevel(); grassCounter++; break;
+                        case "SILAGE": totalSilageFillLevel += item.getFillLevel(); silageCounter++; break;
+                    }
                 }
             }
-        }
 
-        baleRepository.save(new Bale(null, strawCounter, "straw", totalStrawFillLevel));
-        baleRepository.save(new Bale(null, hayCounter, "hay", totalHayFilLevel));
-        baleRepository.save(new Bale(null, grassCounter, "grass", totalGrassFillLevel));
-        baleRepository.save(new Bale(null, silageCounter, "silage", totalSilageFillLevel));
+            // add all bale values to DB
+            baleRepository.save(new Bale(null, strawCounter, "straw", totalStrawFillLevel));
+            baleRepository.save(new Bale(null, hayCounter, "hay", totalHayFilLevel));
+            baleRepository.save(new Bale(null, grassCounter, "grass", totalGrassFillLevel));
+            baleRepository.save(new Bale(null, silageCounter, "silage", totalSilageFillLevel));
+
+        } catch (NullPointerException e) {
+            System.out.println("No items found");
+        }
     }
 
 }
