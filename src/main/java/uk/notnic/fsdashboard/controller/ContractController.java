@@ -22,7 +22,6 @@ public class ContractController {
     @GetMapping("/test-contracts")
     public void testContracts() throws JAXBException {
         contractService.createEntityFromXML("C:\\Users\\Nick\\IdeaProjects\\fsdashboard\\uploads\\project_savegame/missions.xml");
-
     }
 
     @GetMapping("/contracts")
