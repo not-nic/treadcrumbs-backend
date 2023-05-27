@@ -34,15 +34,19 @@ public class ContractService implements ServiceHelper {
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
         Missions missions = (Missions) jaxbUnmarshaller.unmarshal(file);
 
-        for (Mission mission : missions.getMissions()) {
+        try {
+            for (Mission mission : missions.getMissions()) {
 
-            if (mission.getType().equals("harvest")) {
-                mission.getHarvest().calculatePercentageComplete(
-                        mission.getHarvest().getExpectedLitres(), mission.getHarvest().getDepositedLitres()
-                );
+                if (mission.getType().equals("harvest")) {
+                    mission.getHarvest().calculatePercentageComplete(
+                            mission.getHarvest().getExpectedLitres(), mission.getHarvest().getDepositedLitres()
+                    );
+                }
+
+                contractRepository.save(mission);
             }
-
-            contractRepository.save(mission);
+        } catch (NullPointerException e){
+            System.out.println(Ansi.ansi().fgCyan().a(String.format("[INFO] %s: | No Contracts found.", missions.getClass().getSimpleName())).reset());
         }
     }
 }
