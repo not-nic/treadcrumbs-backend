@@ -127,7 +127,7 @@ public class UploadController {
         vehicleService.createEntityFromXML(fullPath + "/vehicles.xml");
         careerService.createEntityFromXML(fullPath + "/careerSavegame.xml");
         farmService.createEntityFromXML(fullPath + "/farms.xml");
-        fieldService.createEntityFromXML(fullPath + "/fields.xml");
+        fieldService.createEntityFromXMLs(fullPath + "/farmland.xml", fullPath + "/precisionFarming.xml");
         salesService.createEntityFromXML(fullPath + "/sales.xml");
         itemService.createEntityFromXML(fullPath + "/items.xml");
         contractService.createEntityFromXML(fullPath + "/missions.xml");
