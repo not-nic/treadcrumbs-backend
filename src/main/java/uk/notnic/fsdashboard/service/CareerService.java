@@ -12,7 +12,7 @@ import java.io.File;
 import java.util.List;
 
 @Service
-public class CareerService extends ServiceHelper {
+public class CareerService implements ServiceHelper {
 
     private final CareerRepository careerRepository;
 

@@ -4,14 +4,14 @@ import org.dom4j.DocumentException;
 
 import javax.xml.bind.JAXBException;
 
-public class ServiceHelper {
+public abstract interface ServiceHelper {
 
-    public ServiceHelper() {
-
+    default void createEntityFromXML(String filepath) throws DocumentException, JAXBException {
+        System.out.println(filepath);
     }
 
-    public void createEntityFromXML(String filepath) throws DocumentException, JAXBException {
-
-    }
+    default void createEntityFromXMLs(String... filenames) throws JAXBException {
+        System.out.println(filenames);
+    };
 
 }

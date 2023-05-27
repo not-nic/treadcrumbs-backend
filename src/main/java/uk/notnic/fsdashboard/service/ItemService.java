@@ -7,6 +7,7 @@ import uk.notnic.fsdashboard.model.Items.Bale;
 import uk.notnic.fsdashboard.model.Items.Item;
 import uk.notnic.fsdashboard.model.Items.Items;
 import uk.notnic.fsdashboard.repository.BaleRepository;
+import org.fusesource.jansi.Ansi;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -15,7 +16,7 @@ import java.io.File;
 import java.util.List;
 
 @Service
-public class ItemService extends ServiceHelper {
+public class ItemService implements ServiceHelper {
 
     private final BaleRepository baleRepository;
 

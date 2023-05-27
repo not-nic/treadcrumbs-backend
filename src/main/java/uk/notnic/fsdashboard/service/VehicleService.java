@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class VehicleService extends ServiceHelper {
+public class VehicleService implements ServiceHelper {
 
     private final TractorRepository tractorRepository;
     private final ImplementRepository implementRepository;

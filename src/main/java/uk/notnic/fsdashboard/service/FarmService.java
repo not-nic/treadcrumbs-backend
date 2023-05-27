@@ -17,7 +17,7 @@ import java.io.File;
 import java.util.List;
 
 @Service
-public class FarmService extends ServiceHelper {
+public class FarmService implements ServiceHelper {
     private final FarmRepository farmRepository;
     private final FinanceRepository financeRepository;
     private final StatisticsRepository statisticsRepository;

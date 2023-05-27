@@ -1,5 +1,6 @@
 package uk.notnic.fsdashboard.service;
 
+import org.fusesource.jansi.Ansi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uk.notnic.fsdashboard.model.Contracts.Mission;
@@ -13,7 +14,7 @@ import java.io.File;
 import java.util.List;
 
 @Service
-public class ContractService extends ServiceHelper {
+public class ContractService implements ServiceHelper {
 
     private final ContractRepository contractRepository;
 

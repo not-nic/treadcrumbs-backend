@@ -13,7 +13,7 @@ import java.io.File;
 import java.util.List;
 
 @Service
-public class SalesService extends ServiceHelper {
+public class SalesService implements ServiceHelper {
     private final SalesRepository salesRepository;
 
     @Autowired
