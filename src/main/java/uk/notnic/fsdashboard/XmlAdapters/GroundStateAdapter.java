@@ -1,8 +1,8 @@
-package uk.notnic.fsdashboard;
+package uk.notnic.fsdashboard.XmlAdapters;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-public class BooleanAdapter extends XmlAdapter<String, Boolean> {
+public class GroundStateAdapter extends XmlAdapter<String, Boolean> {
     @Override
     public Boolean unmarshal(String value) throws Exception {
         return "1.000000".equals(value);

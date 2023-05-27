@@ -1,6 +1,6 @@
 package uk.notnic.fsdashboard.model.Contracts;
 
-import uk.notnic.fsdashboard.BooleanAdapter;
+import uk.notnic.fsdashboard.XmlAdapters.GroundStateAdapter;
 
 import javax.persistence.Embeddable;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -24,23 +24,23 @@ public class ContractField {
     private String currentCropType;
 
     @XmlAttribute(name = "sprayFactor")
-    @XmlJavaTypeAdapter(BooleanAdapter.class)
+    @XmlJavaTypeAdapter(GroundStateAdapter.class)
     private Boolean fertilized;
 
     @XmlAttribute(name = "plowFactor")
-    @XmlJavaTypeAdapter(BooleanAdapter.class)
+    @XmlJavaTypeAdapter(GroundStateAdapter.class)
     private Boolean plowed;
 
     @XmlAttribute(name = "weedFactor")
-    @XmlJavaTypeAdapter(BooleanAdapter.class)
+    @XmlJavaTypeAdapter(GroundStateAdapter.class)
     private Boolean weeded;
 
     @XmlAttribute(name = "limeFactor")
-    @XmlJavaTypeAdapter(BooleanAdapter.class)
+    @XmlJavaTypeAdapter(GroundStateAdapter.class)
     private Boolean limed;
 
     @XmlAttribute(name = "stubbleFactor")
-    @XmlJavaTypeAdapter(BooleanAdapter.class)
+    @XmlJavaTypeAdapter(GroundStateAdapter.class)
     private Boolean mulched;
 
     public ContractField() {
