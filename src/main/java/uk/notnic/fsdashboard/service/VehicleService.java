@@ -112,8 +112,13 @@ public class VehicleService implements ServiceHelper {
             }
 
             for (Node vehicleUnit : vehicle.selectNodes("fillUnit/*")) {
-                String fillType = vehicleUnit.valueOf("@fillUnit");
+
+//                System.out.println("current vehicle unit: " +  vehicleUnit);
+
+                String fillType = vehicleUnit.valueOf("@fillType");
                 Double fillLevel;
+
+//                System.out.println("Current fill Type: " + fillType);
 
                 if (vehicleUnit.valueOf("@fillLevel").equals("")) {
                     fillLevel = 0.0;
