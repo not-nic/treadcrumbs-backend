@@ -31,7 +31,7 @@ public class VehicleController {
 
     @GetMapping("/test-vehicles")
     public void testVehicles() throws DocumentException {
-        vehicleService.createEntityFromXML("C:\\Users\\Nick\\IdeaProjects\\fsdashboard\\uploads\\savegame18/vehicles.xml");
+        vehicleService.createEntityFromXML("C:\\Users\\Nick\\IdeaProjects\\fsdashboard\\uploads\\savegame19/vehicles.xml");
     }
 
     @GetMapping("/implements")
