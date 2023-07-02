@@ -12,6 +12,7 @@ import uk.notnic.fsdashboard.model.Farms.FinanceStats;
 import uk.notnic.fsdashboard.model.Farms.Statistics;
 import uk.notnic.fsdashboard.model.Fields.Field;
 import uk.notnic.fsdashboard.model.Items.Bale;
+import uk.notnic.fsdashboard.model.Placeables.Placeable;
 import uk.notnic.fsdashboard.model.Sales.Sale;
 import uk.notnic.fsdashboard.model.Vehicles.Implement;
 import uk.notnic.fsdashboard.model.Vehicles.Tractor;
@@ -48,15 +49,18 @@ public class UploadController {
     private final ItemService itemService;
     private final ContractService contractService;
     private final ContractRepository contractRepository;
+    private final PlaceableService placeableService;
+    private final PlaceableRepository placeableRepository;
 
     private String saveGameDirectory;
+
 
     public UploadController(VehicleService vehicleService, CareerService careerService, CareerRepository careerRepository,
                             FarmService farmService, FarmRepository farmRepository, StatisticsRepository statisticsRepository,
                             FinanceRepository financeRepository, FieldService fieldService, FieldRepository fieldRepository,
-                            ImplementRepository implementRepository, TractorRepository tractorRepository,
-                            SalesRepository salesRepository, SalesService salesService, BaleRepository baleRepository,
-                            ItemService itemService, ContractService contractService, ContractRepository contractRepository) {
+                            ImplementRepository implementRepository, TractorRepository tractorRepository, SalesRepository salesRepository,
+                            SalesService salesService, BaleRepository baleRepository, ItemService itemService, ContractService contractService,
+                            ContractRepository contractRepository, PlaceableService placeableService, PlaceableRepository placeableRepository) {
         this.vehicleService = vehicleService;
         this.careerService = careerService;
         this.careerRepository = careerRepository;
@@ -74,6 +78,8 @@ public class UploadController {
         this.itemService = itemService;
         this.contractService = contractService;
         this.contractRepository = contractRepository;
+        this.placeableService = placeableService;
+        this.placeableRepository = placeableRepository;
     }
 
     public ArrayList<String> setXmlToMatch() {
@@ -108,6 +114,7 @@ public class UploadController {
         List<Sale> sales = salesRepository.findAll();
         List<Bale> bales = baleRepository.findAll();
         List<Mission> contracts = contractRepository.findAll();
+        List<Placeable> placeables = placeableRepository.findAll();
 
         response.put("career", career);
         response.put("implements", implement);
@@ -119,6 +126,7 @@ public class UploadController {
         response.put("sales", sales);
         response.put("items", bales);
         response.put("contracts", contracts);
+        response.put("placeables", placeables);
 
         return response;
     }
@@ -131,11 +139,13 @@ public class UploadController {
         salesService.createEntityFromXML(fullPath + "/sales.xml");
         itemService.createEntityFromXML(fullPath + "/items.xml");
         contractService.createEntityFromXML(fullPath + "/missions.xml");
+        placeableService.createEntityFromXML((fullPath + "/placeables.xml"));
 
-        System.out.println(String.format("Items added to db: %s | %s | %s | %s | %s | %s | %s | %s",
+        System.out.println(String.format("Items added to db: %s | %s | %s | %s | %s | %s | %s | %s | %s",
                 careerRepository.count(), farmRepository.count(),
                 financeRepository.count(), statisticsRepository.count(), fieldRepository.count(),
-                salesRepository.count(), baleRepository.count(), contractRepository.count()
+                salesRepository.count(), baleRepository.count(), contractRepository.count(),
+                placeableRepository.count()
         ));
     }
 
