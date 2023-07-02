@@ -1,13 +1,14 @@
-package uk.notnic.fsdashboard.model.Placeables.Animals;
+package uk.notnic.fsdashboard.model.Placeables.Animals.HusbandryAnimals;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 @XmlRootElement(name = "animal")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Animal {
+public class Animal implements Serializable {
 
     @XmlAttribute(name = "subType")
     private String breed;
