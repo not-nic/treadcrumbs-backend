@@ -1,4 +1,4 @@
-package uk.notnic.fsdashboard.model.Placeables.Animals;
+package uk.notnic.fsdashboard.model.Placeables.Animals.HusbandryFood;
 
 import javax.persistence.Embeddable;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -13,10 +13,10 @@ import java.io.Serializable;
 public class HusbandryFoodStorageNode implements Serializable {
 
     @XmlAttribute(name = "fillType")
-    String foodFillType;
+    private String foodFillType;
 
     @XmlAttribute(name = "fillLevel")
-    Double foodFillLevel;
+    private Double foodFillLevel;
 
     public HusbandryFoodStorageNode() {
     }

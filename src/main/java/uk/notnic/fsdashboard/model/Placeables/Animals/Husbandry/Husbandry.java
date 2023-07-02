@@ -1,5 +1,6 @@
-package uk.notnic.fsdashboard.model.Placeables.Animals;
+package uk.notnic.fsdashboard.model.Placeables.Animals.Husbandry;
 
+import javax.persistence.Embeddable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -7,23 +8,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "husbandry")
 @XmlAccessorType(XmlAccessType.FIELD)
+@Embeddable
 public class Husbandry {
 
     @XmlElement(name = "storage")
-    private HusbandryStorageNode husbandryStorage;
+    private HusbandryStorage husbandryStorage;
 
     public Husbandry() {
     }
 
-    public Husbandry(HusbandryStorageNode husbandryStorage) {
+    public Husbandry(HusbandryStorage husbandryStorage) {
         this.husbandryStorage = husbandryStorage;
     }
 
-    public HusbandryStorageNode getHusbandryStorage() {
+    public HusbandryStorage getHusbandryStorage() {
         return husbandryStorage;
     }
 
-    public void setHusbandryStorage(HusbandryStorageNode husbandryStorage) {
+    public void setHusbandryStorage(HusbandryStorage husbandryStorage) {
         this.husbandryStorage = husbandryStorage;
     }
 }

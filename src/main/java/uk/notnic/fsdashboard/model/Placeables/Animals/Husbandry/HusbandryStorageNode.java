@@ -1,15 +1,16 @@
-package uk.notnic.fsdashboard.model.Placeables.Animals;
+package uk.notnic.fsdashboard.model.Placeables.Animals.Husbandry;
 
 import javax.persistence.Embeddable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 @Embeddable
 @XmlRootElement(name = "node")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class HusbandryStorageNode {
+public class HusbandryStorageNode implements Serializable {
 
     @XmlAttribute(name = "fillType")
     private String productFillType;

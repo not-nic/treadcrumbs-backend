@@ -1,4 +1,4 @@
-package uk.notnic.fsdashboard.model.Placeables.Animals;
+package uk.notnic.fsdashboard.model.Placeables.Animals.HusbandryFood;
 
 import javax.persistence.Embeddable;
 import javax.xml.bind.annotation.XmlAccessType;
