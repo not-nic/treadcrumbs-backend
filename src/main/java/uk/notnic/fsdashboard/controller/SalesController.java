@@ -21,7 +21,7 @@ public class SalesController {
 
     @GetMapping("/test-sales")
     public void setSales() throws JAXBException {
-        salesService.createEntityFromXML("C:\\Users\\Nick\\IdeaProjects\\fsdashboard\\uploads\\savegame18/sales.xml");
+        salesService.createEntityFromXML("C:\\Users\\Nick\\IdeaProjects\\fsdashboard\\uploads\\project_savegame/sales.xml");
     }
 
     @GetMapping("/sales")

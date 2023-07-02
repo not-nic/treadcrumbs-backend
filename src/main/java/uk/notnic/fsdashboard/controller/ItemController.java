@@ -22,7 +22,7 @@ public class ItemController {
 
     @GetMapping("/test-items")
     public void testItems() throws JAXBException {
-        itemService.createEntityFromXML("C:\\Users\\Nick\\IdeaProjects\\fsdashboard\\uploads\\savegame3/items.xml");
+        itemService.createEntityFromXML("C:\\Users\\Nick\\IdeaProjects\\fsdashboard\\uploads\\project_savegame/items.xml");
     }
 
     @GetMapping("/bales")

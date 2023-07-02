@@ -22,7 +22,7 @@ public class FieldsController {
     @GetMapping("/test-fields")
     public void setFields() throws JAXBException {
         fieldService.createEntityFromXMLs("C:\\Users\\Nick\\IdeaProjects\\fsdashboard\\uploads\\project_savegame/farmland.xml",
-                                                    "C:\\Users\\Nick\\IdeaProjects\\fsdashboard\\uploads\\project_savegame/precisionFarming.xml");
+                "C:\\Users\\Nick\\IdeaProjects\\fsdashboard\\uploads\\project_savegame/precisionFarming.xml");
     }
 
     @GetMapping("/fields")
