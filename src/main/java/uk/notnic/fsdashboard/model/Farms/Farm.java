@@ -89,7 +89,6 @@ public class Farm {
         this.players = players;
     }
 
-
     public Statistics getStatistics() {
         return statistics;
     }

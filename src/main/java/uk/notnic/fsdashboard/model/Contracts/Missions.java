@@ -11,7 +11,7 @@ import java.util.List;
 public class Missions {
 
     @XmlElement(name = "mission")
-    List<Mission> missions;
+    private List<Mission> missions;
 
     public Missions() {
     }

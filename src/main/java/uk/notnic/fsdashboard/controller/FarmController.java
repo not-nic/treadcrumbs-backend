@@ -18,9 +18,9 @@ public class FarmController {
         this.farmService = farmService;
     }
 
-    @GetMapping("/test-farms")
-    public void setFields() throws JAXBException {
-        farmService.createEntityFromXML("C:\\Users\\Nick\\IdeaProjects\\fsdashboard\\uploads\\savegame18/farms.xml");
+    @GetMapping("/test-farm")
+    public void testFarm() throws JAXBException {
+        farmService.createEntityFromXML("C:\\Users\\Nick\\IdeaProjects\\fsdashboard\\uploads\\project_savegame/farms.xml");
     }
 
     @GetMapping("/farm")

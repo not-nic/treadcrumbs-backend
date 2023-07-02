@@ -58,6 +58,7 @@ public class VehicleService implements ServiceHelper {
         List<Node> listOfVehicles = document.selectNodes("//vehicles/vehicle");
         List<Node> listOfAttachments = document.selectNodes("//vehicles/attachments");
 
+
         // for each vehicle in the vehicles list
         for (Node vehicle : listOfVehicles) {
 
