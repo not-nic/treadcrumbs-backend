@@ -4,6 +4,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uk.notnic.fsdashboard.model.Vehicles.*;
@@ -11,9 +12,11 @@ import uk.notnic.fsdashboard.model.Coordinate;
 import uk.notnic.fsdashboard.repository.ImplementRepository;
 import uk.notnic.fsdashboard.repository.TractorRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VehicleService implements ServiceHelper {
@@ -21,15 +24,12 @@ public class VehicleService implements ServiceHelper {
     private final TractorRepository tractorRepository;
     private final ImplementRepository implementRepository;
 
+    ModelMapper modelMapper = new ModelMapper();
+
     @Autowired
     public VehicleService(TractorRepository tractorRepository, ImplementRepository implementRepository) {
         this.tractorRepository = tractorRepository;
         this.implementRepository = implementRepository;
-    }
-
-    public List<Vehicle> getAllVehicles() {
-//        TODO: Return all vehicles & implements
-        return null;
     }
 
     public List<Implement> getAllImplements() {
@@ -40,9 +40,32 @@ public class VehicleService implements ServiceHelper {
         return tractorRepository.findAll();
     }
 
-    public void createVehicle(Vehicle vehicle) {
-//        TODO: Create Tractor instead of vehicle.
-//        vehicleRepository.save(vehicle);
+    public Optional<Implement> getImplementById(long id) {
+        return implementRepository.findById(id);
+    }
+
+    public Optional<Tractor> getTractorById(long id) {
+        return tractorRepository.findById(id);
+    }
+
+    public Tractor updateTractor(long id, Tractor updatedTractor) {
+
+        Tractor existingTractor = tractorRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Tractor with ID: %s not found", id)));
+
+        modelMapper.map(updatedTractor, existingTractor);
+
+        return tractorRepository.save(existingTractor);
+    }
+
+    public Implement updateImplement(Long id, Implement updatedImplement) {
+
+        Implement existingImplement = implementRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Implement with ID: %s not found", id)));
+
+        modelMapper.map(updatedImplement, existingImplement);
+
+        return implementRepository.save(existingImplement);
     }
 
     // creates entity from reading a xml file.
