@@ -45,4 +45,19 @@ public class Tractor extends Vehicle {
         return attachment;
     }
 
+    public void setLicencePlate(String licencePlate) {
+        this.licencePlate = licencePlate;
+    }
+
+    public void setAiLastJob(String aiLastJob) {
+        this.aiLastJob = aiLastJob;
+    }
+
+    public void setFuel(Double fuel) {
+        this.fuel = fuel;
+    }
+
+    public void setAttachment(Attachments attachment) {
+        this.attachment = attachment;
+    }
 }

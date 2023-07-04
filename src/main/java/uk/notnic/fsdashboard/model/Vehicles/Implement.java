@@ -31,4 +31,12 @@ public class Implement extends Vehicle {
     public FillUnit getFillUnits() {
         return fillUnit;
     }
+
+    public void setSelectedFruitType(String selectedFruitType) {
+        this.selectedFruitType = selectedFruitType;
+    }
+
+    public void setFillUnit(FillUnit fillUnit) {
+        this.fillUnit = fillUnit;
+    }
 }
