@@ -5,11 +5,13 @@ import org.springframework.stereotype.Repository;
 import uk.notnic.fsdashboard.model.Vehicles.Tractor;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TractorRepository extends CrudRepository<Tractor, Long> {
     List<Tractor> findAll();
 
-    List<Tractor> findAllByFarmIdEquals(Integer farmId);
+    Optional<Tractor> findById(Long id);
 
+    List<Tractor> findAllByFarmIdEquals(Integer farmId);
 }
