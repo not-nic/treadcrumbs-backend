@@ -53,6 +53,7 @@ public class UploadController {
     private final PlaceableRepository placeableRepository;
 
     private String saveGameDirectory;
+    private Boolean createdSaveGame = false;
 
 
     public UploadController(VehicleService vehicleService, CareerService careerService, CareerRepository careerRepository,
@@ -100,7 +101,19 @@ public class UploadController {
         return xmlToMatch;
     }
 
-    @GetMapping("/save-game")
+    @GetMapping("savegame/status")
+    public Boolean getSaveGameStatus() {
+        // check if a xml file has been read or the 'career' populated.
+        if (careerRepository.count() >= 1) {
+            createdSaveGame = true;
+        } else {
+            createdSaveGame = false;
+        }
+
+        return createdSaveGame;
+    }
+
+    @GetMapping("/savegame")
     public Map<String, Object> getSaveGame() {
         Map<String, Object> response = new HashMap<>();
 
@@ -140,6 +153,8 @@ public class UploadController {
         itemService.createEntityFromXML(fullPath + "/items.xml");
         contractService.createEntityFromXML(fullPath + "/missions.xml");
         placeableService.createEntityFromXML((fullPath + "/placeables.xml"));
+
+        createdSaveGame = true;
 
         System.out.println(String.format("Items added to db: %s | %s | %s | %s | %s | %s | %s | %s | %s",
                 careerRepository.count(), farmRepository.count(),
@@ -197,6 +212,6 @@ public class UploadController {
         } catch (DocumentException | JAXBException e) {
             throw new RuntimeException(e);
         }
-        return ResponseEntity.ok(String.format("%s files uploaded successfully.", uploadedFiles));
+        return ResponseEntity.ok(String.format("%s files read successfully.", uploadedFiles));
     }
 }
