@@ -18,17 +18,6 @@ public class VehicleController {
         this.vehicleService = vehicleService;
     }
 
-    @PostMapping("/add-vehicle")
-    public void createVehicle(@RequestBody Vehicle vehicle) {
-        vehicleService.createVehicle(vehicle);
-    }
-
-
-    @GetMapping("/vehicles")
-    public List<Vehicle> allVehicles() {
-        return vehicleService.getAllVehicles();
-    }
-
     @GetMapping("/test-vehicles")
     public void testVehicles() throws DocumentException {
         vehicleService.createEntityFromXML("C:\\Users\\Nick\\IdeaProjects\\fsdashboard\\uploads\\project_savegame/vehicles.xml");
