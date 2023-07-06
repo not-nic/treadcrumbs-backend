@@ -48,6 +48,10 @@ public class VehicleService implements ServiceHelper {
         return tractorRepository.findById(id);
     }
 
+    public void createTractor(Tractor tractor) {
+        tractorRepository.save(tractor);
+    }
+
     public Tractor updateTractor(long id, Tractor updatedTractor) {
 
         Tractor existingTractor = tractorRepository.findById(id)

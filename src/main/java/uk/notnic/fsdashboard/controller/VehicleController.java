@@ -40,17 +40,22 @@ public class VehicleController {
         return vehicleService.getAllImplements();
     }
 
-    @GetMapping("tractors/{id}")
+    @GetMapping("/tractors/{id}")
     public Optional<Tractor> findTractorById(@PathVariable long id) {
         return vehicleService.getTractorById(id);
     }
 
-    @PostMapping("tractors/{id}")
+    @PostMapping("/tractors/{id}")
     public Tractor updateTractor(@PathVariable long id, @RequestBody Tractor tractor) {
         return vehicleService.updateTractor(id, tractor);
     }
 
-    @GetMapping("tractors")
+    @PostMapping("/tractors")
+    public void createTractor(@RequestBody Tractor tractor) {
+        vehicleService.createTractor(tractor);
+    }
+
+    @GetMapping("/tractors")
     public List<Tractor> allTractors() {
         return vehicleService.getAllTractors();
     }
