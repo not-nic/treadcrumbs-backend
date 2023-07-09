@@ -45,4 +45,20 @@ public class Career {
     public String getDateCreated() {
         return dateCreated;
     }
+
+    public void setSaveGameName(String saveGameName) {
+        this.saveGameName = saveGameName;
+    }
+
+    public void setMapTitle(String mapTitle) {
+        this.mapTitle = mapTitle;
+    }
+
+    public void setDifficulty(Integer difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public void setDateCreated(String dateCreated) {
+        this.dateCreated = dateCreated;
+    }
 }
