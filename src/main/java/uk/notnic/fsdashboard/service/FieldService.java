@@ -1,6 +1,7 @@
 package uk.notnic.fsdashboard.service;
 
 import org.dom4j.DocumentException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uk.notnic.fsdashboard.model.Contracts.Mission;
@@ -14,18 +15,21 @@ import uk.notnic.fsdashboard.model.Fields.Fields;
 import uk.notnic.fsdashboard.model.Fields.PrecisionFarming;
 import uk.notnic.fsdashboard.repository.FieldRepository;
 
+import javax.persistence.EntityNotFoundException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Service
 public class FieldService implements ServiceHelper {
 
     private final FieldRepository fieldRepository;
+    ModelMapper modelMapper = new ModelMapper();
 
     @Autowired
     public FieldService(FieldRepository fieldRepository) {
@@ -39,6 +43,24 @@ public class FieldService implements ServiceHelper {
     @Override
     public void createEntityFromXML(String filepath) throws DocumentException, JAXBException {
 
+    }
+
+    public Optional<Field> getFieldById(long id) {
+        return fieldRepository.findById(id);
+    }
+
+    public void createField(Field field) {
+        fieldRepository.save(field);
+    }
+
+    public Field updateField(long id, Field updatedField) {
+
+        Field existingField = fieldRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Field with ID %s not found", id)));
+
+        modelMapper.map(updatedField, existingField);
+
+        return fieldRepository.save(existingField);
     }
 
     @Override

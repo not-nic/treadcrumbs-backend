@@ -1,13 +1,12 @@
 package uk.notnic.fsdashboard.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import uk.notnic.fsdashboard.model.Fields.Field;
 import uk.notnic.fsdashboard.service.FieldService;
 
 import javax.xml.bind.JAXBException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -28,5 +27,20 @@ public class FieldsController {
     @GetMapping("/fields")
     public List<Field> allFields() {
         return fieldService.getAllFields();
+    }
+
+    @GetMapping("/fields/{id}")
+    public Optional<Field> findFieldById(@PathVariable long id) {
+        return fieldService.getFieldById(id);
+    }
+
+    @PostMapping("/fields/{id}")
+    public Field updateField(@PathVariable long id, @RequestBody Field field) {
+        return fieldService.updateField(id, field);
+    }
+
+    @PostMapping("/fields")
+    public void createField(@RequestBody Field field) {
+        fieldService.createField(field);
     }
 }
