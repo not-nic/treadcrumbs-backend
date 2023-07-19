@@ -34,6 +34,11 @@ public class FieldsController {
         return fieldService.getFieldById(id);
     }
 
+    @GetMapping("/fields/owned")
+    public List<Field> findFieldByOwned() {
+        return fieldService.getOwnedFields();
+    }
+
     @PostMapping("/fields/{id}")
     public Field updateField(@PathVariable long id, @RequestBody Field field) {
         return fieldService.updateField(id, field);
