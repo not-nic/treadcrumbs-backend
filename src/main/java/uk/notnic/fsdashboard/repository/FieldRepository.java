@@ -11,5 +11,7 @@ import java.util.Optional;
 public interface FieldRepository extends CrudRepository<Field, Long> {
     List<Field> findAll();
 
+    List<Field> findAllByOwnedTrue();
+
     Optional<Field> findById(Long id);
 }
