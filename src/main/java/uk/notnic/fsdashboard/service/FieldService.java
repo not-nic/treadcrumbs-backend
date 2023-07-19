@@ -4,14 +4,10 @@ import org.dom4j.DocumentException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uk.notnic.fsdashboard.model.Contracts.Mission;
-import uk.notnic.fsdashboard.model.Contracts.Missions;
 import uk.notnic.fsdashboard.model.Fields.EnvironmentalScores.Farmland;
-import uk.notnic.fsdashboard.model.Fields.EnvironmentalScores.Tillage;
 import uk.notnic.fsdashboard.model.Fields.Farmlands.Farmlands;
 import uk.notnic.fsdashboard.model.Fields.Farmlands.PlayerFarmland;
 import uk.notnic.fsdashboard.model.Fields.Field;
-import uk.notnic.fsdashboard.model.Fields.Fields;
 import uk.notnic.fsdashboard.model.Fields.PrecisionFarming;
 import uk.notnic.fsdashboard.repository.FieldRepository;
 
@@ -43,6 +39,10 @@ public class FieldService implements ServiceHelper {
     @Override
     public void createEntityFromXML(String filepath) throws DocumentException, JAXBException {
 
+    }
+
+    public List<Field> getOwnedFields() {
+        return fieldRepository.findAllByOwnedTrue();
     }
 
     public Optional<Field> getFieldById(long id) {
