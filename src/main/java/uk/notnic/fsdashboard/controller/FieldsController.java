@@ -44,6 +44,13 @@ public class FieldsController {
         return fieldService.updateField(id, field);
     }
 
+    @GetMapping("/fields/delete/{id}")
+    public String deleteById(@PathVariable long id) {
+        fieldService.DeleteFieldById(id);
+
+        return String.format("Field %s deleted", id);
+    }
+
     @PostMapping("/fields")
     public void createField(@RequestBody Field field) {
         fieldService.createField(field);

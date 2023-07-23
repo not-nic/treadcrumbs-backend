@@ -14,4 +14,7 @@ public interface FieldRepository extends CrudRepository<Field, Long> {
     List<Field> findAllByOwnedTrue();
 
     Optional<Field> findById(Long id);
+
+    @Override
+    void deleteById(Long id);
 }

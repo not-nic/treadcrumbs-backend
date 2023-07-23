@@ -63,6 +63,10 @@ public class FieldService implements ServiceHelper {
         return fieldRepository.save(existingField);
     }
 
+    public void DeleteFieldById(long id) {
+        fieldRepository.deleteById(id);
+    }
+
     @Override
     public void createEntityFromXMLs(String... filenames) throws JAXBException {
         File farmlandPath = new File(filenames[0]);
