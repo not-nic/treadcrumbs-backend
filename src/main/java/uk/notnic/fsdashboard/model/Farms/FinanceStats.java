@@ -105,13 +105,14 @@ public class FinanceStats implements Serializable {
     public FinanceStats() {
     }
 
-    public FinanceStats(Double newVehiclesCost, Double soldVehicles, Double newAnimalsCost, Double soldAnimals,
+    public FinanceStats(Long id, Double newVehiclesCost, Double soldVehicles, Double newAnimalsCost, Double soldAnimals,
                         Double constructionCost, Double soldBuildings, Double fieldPurchase, Double fieldSelling,
                         Double vehicleRunningCost, Double vehicleLeasingCost, Double propertyMaintenance,
-                        Double propertyIncome, Double productionCosts, Double soldWood, Double soldBales,
-                        Double soldWool, Double soldMilk, Double soldProducts, Double purchaseFuel, Double purchaseSeeds,
+                        Double propertyIncome, Double productionCosts, Double soldWood, Double soldBales, Double soldWool,
+                        Double soldMilk, Double soldProducts, Double purchaseFuel, Double purchaseSeeds,
                         Double purchaseFertilizer, Double purchaseSaplings, Double purchaseWater, Double harvestIncome,
                         Double incomeBga, Double missionIncome, Double wagePayment, Double other, Double loanInterest) {
+        this.id = id;
         this.newVehiclesCost = newVehiclesCost;
         this.soldVehicles = soldVehicles;
         this.newAnimalsCost = newAnimalsCost;
@@ -141,6 +142,10 @@ public class FinanceStats implements Serializable {
         this.wagePayment = wagePayment;
         this.other = other;
         this.loanInterest = loanInterest;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public Double getNewVehiclesCost() {
@@ -257,5 +262,121 @@ public class FinanceStats implements Serializable {
 
     public Double getLoanInterest() {
         return loanInterest;
+    }
+
+    public void setNewVehiclesCost(Double newVehiclesCost) {
+        this.newVehiclesCost = newVehiclesCost;
+    }
+
+    public void setSoldVehicles(Double soldVehicles) {
+        this.soldVehicles = soldVehicles;
+    }
+
+    public void setNewAnimalsCost(Double newAnimalsCost) {
+        this.newAnimalsCost = newAnimalsCost;
+    }
+
+    public void setSoldAnimals(Double soldAnimals) {
+        this.soldAnimals = soldAnimals;
+    }
+
+    public void setConstructionCost(Double constructionCost) {
+        this.constructionCost = constructionCost;
+    }
+
+    public void setSoldBuildings(Double soldBuildings) {
+        this.soldBuildings = soldBuildings;
+    }
+
+    public void setFieldPurchase(Double fieldPurchase) {
+        this.fieldPurchase = fieldPurchase;
+    }
+
+    public void setFieldSelling(Double fieldSelling) {
+        this.fieldSelling = fieldSelling;
+    }
+
+    public void setVehicleRunningCost(Double vehicleRunningCost) {
+        this.vehicleRunningCost = vehicleRunningCost;
+    }
+
+    public void setVehicleLeasingCost(Double vehicleLeasingCost) {
+        this.vehicleLeasingCost = vehicleLeasingCost;
+    }
+
+    public void setPropertyMaintenance(Double propertyMaintenance) {
+        this.propertyMaintenance = propertyMaintenance;
+    }
+
+    public void setPropertyIncome(Double propertyIncome) {
+        this.propertyIncome = propertyIncome;
+    }
+
+    public void setProductionCosts(Double productionCosts) {
+        this.productionCosts = productionCosts;
+    }
+
+    public void setSoldWood(Double soldWood) {
+        this.soldWood = soldWood;
+    }
+
+    public void setSoldBales(Double soldBales) {
+        this.soldBales = soldBales;
+    }
+
+    public void setSoldWool(Double soldWool) {
+        this.soldWool = soldWool;
+    }
+
+    public void setSoldMilk(Double soldMilk) {
+        this.soldMilk = soldMilk;
+    }
+
+    public void setSoldProducts(Double soldProducts) {
+        this.soldProducts = soldProducts;
+    }
+
+    public void setPurchaseFuel(Double purchaseFuel) {
+        this.purchaseFuel = purchaseFuel;
+    }
+
+    public void setPurchaseSeeds(Double purchaseSeeds) {
+        this.purchaseSeeds = purchaseSeeds;
+    }
+
+    public void setPurchaseFertilizer(Double purchaseFertilizer) {
+        this.purchaseFertilizer = purchaseFertilizer;
+    }
+
+    public void setPurchaseSaplings(Double purchaseSaplings) {
+        this.purchaseSaplings = purchaseSaplings;
+    }
+
+    public void setPurchaseWater(Double purchaseWater) {
+        this.purchaseWater = purchaseWater;
+    }
+
+    public void setHarvestIncome(Double harvestIncome) {
+        this.harvestIncome = harvestIncome;
+    }
+
+    public void setIncomeBga(Double incomeBga) {
+        this.incomeBga = incomeBga;
+    }
+
+    public void setMissionIncome(Double missionIncome) {
+        this.missionIncome = missionIncome;
+    }
+
+    public void setWagePayment(Double wagePayment) {
+        this.wagePayment = wagePayment;
+    }
+
+    public void setOther(Double other) {
+        this.other = other;
+    }
+
+    public void setLoanInterest(Double loanInterest) {
+        this.loanInterest = loanInterest;
     }
 }
