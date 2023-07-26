@@ -32,7 +32,6 @@ public class NoteService {
 
     public void createNote(Note note) {
         note.setCreated(LocalDateTime.now());
-
         noteRepository.save(note);
     }
 
