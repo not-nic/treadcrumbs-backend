@@ -17,7 +17,7 @@ public class Note {
     private Long id;
     private String author;
     private String contents;
-    private String tag;
+    private Boolean generated;
     private LocalDateTime created;
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -30,12 +30,11 @@ public class Note {
     public Note() {
     }
 
-    public Note(Long id, String author, String contents, String tag, LocalDateTime created,
-                Map<String, String> additionalNoteData) {
+    public Note(Long id, String author, String contents, Boolean generated, LocalDateTime created, Map<String, String> additionalNoteData) {
         this.id = id;
         this.author = author;
         this.contents = contents;
-        this.tag = tag;
+        this.generated = generated;
         this.created = created;
         this.additionalNoteData = additionalNoteData;
     }
@@ -60,12 +59,12 @@ public class Note {
         this.contents = contents;
     }
 
-    public String getTag() {
-        return tag;
+    public boolean isGenerated() {
+        return generated;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setGenerated(Boolean generated) {
+        this.generated = generated;
     }
 
     public LocalDateTime getCreated() {
