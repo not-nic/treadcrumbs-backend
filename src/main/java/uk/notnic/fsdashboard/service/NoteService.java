@@ -75,7 +75,7 @@ public class NoteService {
         return null;
     }
 
-    public void createSeedCommand(Note note) {
+    public void createFieldworkCommand(Note note) {
 
         note.setCreated(LocalDateTime.now());
         StringBuilder newContents = new StringBuilder();
@@ -89,15 +89,16 @@ public class NoteService {
 
             if (value instanceof Long argumentValue) {
                 String argumentName = argument.split(":")[0];
+                String commandType = contents.split(" ")[0];
 
                 if ("field".equals(argumentName)) {
-                    fieldRepository.findById(argumentValue).ifPresent(field -> newContents.append(String.format("/Seed field %s with ", field.getFarmlandId())));
+                    fieldRepository.findById(argumentValue).ifPresent(field -> newContents.append(String.format("%s field %s", commandType, field.getFarmlandId())));
 
                 } else if ("vehicle".equals(argumentName)) {
                     tractorRepository.findById(argumentValue).ifPresent(tractor -> newContents.append(String.format(" using %s.", tractor.getName())));
                 }
             } else if (value instanceof String cropName) {
-                newContents.append(String.format("[%s]", cropName));
+                newContents.append(String.format(" with [%s]", cropName));
             }
         }
 

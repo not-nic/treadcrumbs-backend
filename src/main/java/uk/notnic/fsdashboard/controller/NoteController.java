@@ -38,9 +38,9 @@ public class NoteController {
         return String.format("Created Note %s", note.getId());
     }
 
-    @PostMapping("/notes/seed")
+    @PostMapping("/notes/fieldwork")
     public String createGeneratedNote(@RequestBody Note note) {
-        noteService.createSeedCommand(note);
+        noteService.createFieldworkCommand(note);
         return String.format("Created note %s - at %s", note.getId(), note.getCreated());
     }
 
