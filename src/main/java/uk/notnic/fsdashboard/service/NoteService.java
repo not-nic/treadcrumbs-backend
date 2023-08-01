@@ -11,9 +11,7 @@ import uk.notnic.fsdashboard.repository.TractorRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -76,29 +74,86 @@ public class NoteService {
     }
 
     public void createFieldworkCommand(Note note) {
-
         note.setCreated(LocalDateTime.now());
         StringBuilder newContents = new StringBuilder();
 
         String contents = note.getContents();
 
+        // create list of arguments joined by ':' from /command
         List<String> arguments = findArguments(contents);
 
         for (String argument : arguments) {
+
+            // get value after ':'
             Object value = findNoteValues(argument);
 
+            // check if the current value is a Long
             if (value instanceof Long argumentValue) {
                 String argumentName = argument.split(":")[0];
                 String commandType = contents.split(" ")[0];
 
                 if ("field".equals(argumentName)) {
+                    // find the field by its id, if it exists add it to the string builder.
                     fieldRepository.findById(argumentValue).ifPresent(field -> newContents.append(String.format("%s field %s", commandType, field.getFarmlandId())));
 
                 } else if ("vehicle".equals(argumentName)) {
+                    // find the vehicle by its id, if it exists add it to the string builder.
                     tractorRepository.findById(argumentValue).ifPresent(tractor -> newContents.append(String.format(" using %s.", tractor.getName())));
                 }
             } else if (value instanceof String cropName) {
+                // check if a crop exists as a 'optional' argument for seed jobs.
                 newContents.append(String.format(" with [%s]", cropName));
+
+                // check if the additional note data is not empty
+                if (!note.getAdditionalNoteData().isEmpty()) {
+
+                    // take the two arguments for seeding (field size & seeds per Ha) which are passed in from the frontend.
+                    Map<String, String> newNoteData = new HashMap<>();
+                    Double[] fieldSizeWrapper = {0.0};
+                    Double seedsPerHa = 0.0;
+
+                    fieldSizeWrapper[0] = 0.0;
+
+                    // iterate through each entry in additional note data
+                    for (Map.Entry<String, String> entry : note.getAdditionalNoteData().entrySet()) {
+                        String additionalDataKey = entry.getKey();
+                        String additionalDataValue = entry.getValue();
+
+                        // check if the current key equals fieldId.
+                        if (additionalDataKey.equals("fieldId")) {
+                            Long fieldId = Long.parseLong(additionalDataValue);
+
+                            Optional<Field> fieldOptional = fieldRepository.findById(fieldId);
+
+                            // check if the field exists in the repository.
+                            if (fieldOptional.isPresent()) {
+                                Field field = fieldOptional.get();
+                                // check if the field size is not null
+                                try {
+                                    fieldSizeWrapper[0] = field.getFieldSizeHa();
+                                } catch (NullPointerException e) {
+                                    fieldSizeWrapper[0] = 0.0;
+                                }
+                            }
+                        }
+
+                        // check if the current key equals seedsPerHa.
+                        if (additionalDataKey.equals("seedsPerHa")) {
+                            // Check if the seedsPerHa is a valid number
+                            try {
+                                seedsPerHa = Double.parseDouble(additionalDataValue);
+                            } catch (NumberFormatException e) {
+                                seedsPerHa = 0.0;
+                            }
+                        }
+
+                        // add seed costs to the new data object.
+                        newNoteData.put("Seed Costs", String.valueOf(((fieldSizeWrapper[0] / 10000) * seedsPerHa)));
+                    }
+
+                    // replace the arguments fieldId & seeds per Ha with the seed costs.
+                    note.setAdditionalNoteData(newNoteData);
+                }
             }
         }
 
