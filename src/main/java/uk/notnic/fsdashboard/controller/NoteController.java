@@ -38,6 +38,12 @@ public class NoteController {
         return String.format("Created Note %s", note.getId());
     }
 
+    @PostMapping("/notes/seed")
+    public String createGeneratedNote(@RequestBody Note note) {
+        noteService.createSeedCommand(note);
+        return String.format("Created note %s - at %s", note.getId(), note.getCreated());
+    }
+
     @DeleteMapping("/notes/{id}")
     public String deleteNoteById(@PathVariable long id) {
         noteService.DeleteNoteById(id);
