@@ -148,7 +148,7 @@ public class NoteService {
                         }
 
                         // add seed costs to the new data object.
-                        newNoteData.put("Seed Costs", String.valueOf(((fieldSizeWrapper[0] / 10000) * seedsPerHa)));
+                        newNoteData.put("Seed Costs", (fieldSizeWrapper[0] / 10000) * seedsPerHa + "l");
                     }
 
                     // replace the arguments fieldId & seeds per Ha with the seed costs.
