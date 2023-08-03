@@ -43,6 +43,7 @@ public class NoteService {
         noteRepository.save(note);
     }
 
+    // get arguments from a command that are joined with a `:`
     private List<String> findArguments(String noteContents) {
         List<String> matches = new ArrayList<>();
 
@@ -57,6 +58,7 @@ public class NoteService {
         return matches;
     }
 
+    // get the value of a command after the `:`
     private Object findNoteValues(String foundArgument) {
         Pattern pattern = Pattern.compile(":\\s*([\\w\\d]+)");
         Matcher matcher = pattern.matcher(foundArgument);
@@ -90,7 +92,10 @@ public class NoteService {
             // check if the current value is a Long
             if (value instanceof Long argumentValue) {
                 String argumentName = argument.split(":")[0];
-                String commandType = contents.split(" ")[0];
+
+                // get command type and remove `/` from the beginning.
+                String commandType = contents.split(" ")[0].substring(1);
+
 
                 if ("field".equals(argumentName)) {
                     // find the field by its id, if it exists add it to the string builder.
@@ -110,7 +115,7 @@ public class NoteService {
                     // take the two arguments for seeding (field size & seeds per Ha) which are passed in from the frontend.
                     Map<String, String> newNoteData = new HashMap<>();
                     Double[] fieldSizeWrapper = {0.0};
-                    Double seedsPerHa = 0.0;
+                    double seedsPerHa = 0.0;
 
                     fieldSizeWrapper[0] = 0.0;
 
@@ -131,7 +136,7 @@ public class NoteService {
                                 // check if the field size is not null
                                 try {
                                     fieldSizeWrapper[0] = field.getFieldSizeHa();
-                                } catch (NullPointerException e) {
+                                } catch (NumberFormatException e) {
                                     fieldSizeWrapper[0] = 0.0;
                                 }
                             }
@@ -148,7 +153,7 @@ public class NoteService {
                         }
 
                         // add seed costs to the new data object.
-                        newNoteData.put("Seed Costs", (fieldSizeWrapper[0] / 10000) * seedsPerHa + "l");
+                        newNoteData.put("Seed Costs", Math.round((fieldSizeWrapper[0] / 10000) * seedsPerHa) + "l");
                     }
 
                     // replace the arguments fieldId & seeds per Ha with the seed costs.
