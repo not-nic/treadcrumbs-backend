@@ -83,6 +83,57 @@ public class UploadController {
         this.placeableRepository = placeableRepository;
     }
 
+    @PostMapping("/upload")
+    public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file ) {
+
+        String fileName = file.getOriginalFilename();
+        String filePath = "C:\\Users\\Nick\\IdeaProjects\\fsdashboard\\uploads\\";
+        int uploadedFiles = 0;
+
+        if (!fileName.endsWith(".zip")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please upload your save game as a zip file.");
+        }
+
+        try (ZipInputStream zipInputStream = new ZipInputStream(file.getInputStream())) {
+            ZipEntry entry;
+            while ((entry = zipInputStream.getNextEntry()) != null) {
+                String entryName = entry.getName();
+
+                // check file extension is xml
+                if (entryName.endsWith(".xml") && setXmlToMatch().contains(entryName.split("/")[1])) {
+                    // save uploaded xml files.
+                    File outputFile = new File(filePath + entryName);
+                    saveGameDirectory = filePath + entryName.split("/")[0];
+
+                    if (!outputFile.exists()) {
+                        outputFile.getParentFile().mkdirs();
+                        outputFile.createNewFile();
+                    }
+
+                    try (OutputStream out = new FileOutputStream(outputFile)) {
+                        byte[] buffer = new byte[1024];
+                        int len;
+                        while ((len = zipInputStream.read(buffer)) > 0) {
+                            out.write(buffer, 0, len);
+                        }
+                        uploadedFiles++;
+                    }
+                }
+                else {
+                    System.out.println("Discarding " + entryName);
+                }
+            }
+
+            readFile(saveGameDirectory);
+
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } catch (DocumentException | JAXBException e) {
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.ok(String.format("%s files read successfully.", uploadedFiles));
+    }
+
     public ArrayList<String> setXmlToMatch() {
         ArrayList<String> xmlToMatch = new ArrayList<>();
 
@@ -164,54 +215,5 @@ public class UploadController {
         ));
     }
 
-    @PostMapping("/upload")
-    public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file ) {
 
-        String fileName = file.getOriginalFilename();
-        String filePath = "C:\\Users\\Nick\\IdeaProjects\\fsdashboard\\uploads\\";
-        int uploadedFiles = 0;
-
-        if (!fileName.endsWith(".zip")) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please upload your save game as a zip file.");
-        }
-
-        try (ZipInputStream zipInputStream = new ZipInputStream(file.getInputStream())) {
-            ZipEntry entry;
-            while ((entry = zipInputStream.getNextEntry()) != null) {
-                String entryName = entry.getName();
-
-                // check file extension is xml
-                if (entryName.endsWith(".xml") && setXmlToMatch().contains(entryName.split("/")[1])) {
-                    // save uploaded xml files.
-                    File outputFile = new File(filePath + entryName);
-                    saveGameDirectory = filePath + entryName.split("/")[0];
-
-                    if (!outputFile.exists()) {
-                        outputFile.getParentFile().mkdirs();
-                        outputFile.createNewFile();
-                    }
-
-                    try (OutputStream out = new FileOutputStream(outputFile)) {
-                        byte[] buffer = new byte[1024];
-                        int len;
-                        while ((len = zipInputStream.read(buffer)) > 0) {
-                            out.write(buffer, 0, len);
-                        }
-                        uploadedFiles++;
-                    }
-                }
-                else {
-                    System.out.println("Discarding " + entryName);
-                }
-            }
-
-            readFile(saveGameDirectory);
-
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        } catch (DocumentException | JAXBException e) {
-            throw new RuntimeException(e);
-        }
-        return ResponseEntity.ok(String.format("%s files read successfully.", uploadedFiles));
-    }
 }

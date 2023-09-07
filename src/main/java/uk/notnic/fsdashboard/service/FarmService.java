@@ -23,7 +23,8 @@ public class FarmService implements ServiceHelper {
     private final StatisticsRepository statisticsRepository;
 
     @Autowired
-    public FarmService(FarmRepository farmRepository, FinanceRepository financeRepository, StatisticsRepository statisticsRepository) {
+    public FarmService(FarmRepository farmRepository, FinanceRepository financeRepository,
+                       StatisticsRepository statisticsRepository) {
         this.farmRepository = farmRepository;
         this.financeRepository = financeRepository;
         this.statisticsRepository = statisticsRepository;
@@ -50,5 +51,4 @@ public class FarmService implements ServiceHelper {
             financeRepository.save(day);
         }
     }
-
 }

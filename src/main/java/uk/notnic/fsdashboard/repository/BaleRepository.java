@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface BaleRepository extends CrudRepository<Bale, Long> {
-
     List<Bale> findAll();
 }

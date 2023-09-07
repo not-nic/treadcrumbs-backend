@@ -72,7 +72,8 @@ public class ItemService implements ServiceHelper {
             baleRepository.save(new Bale(null, silageCounter, "silage", totalSilageFillLevel));
 
         } catch (NullPointerException e) {
-            System.out.println(Ansi.ansi().fgCyan().a(String.format("[INFO] %s: | No items found.", items.getClass().getSimpleName())).reset());
+            System.out.println(Ansi.ansi().fgCyan().a(String.format("[INFO] %s: | No items found.",
+                    items.getClass().getSimpleName())).reset());
         }
     }
 

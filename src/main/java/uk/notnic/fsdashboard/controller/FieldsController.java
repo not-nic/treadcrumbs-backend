@@ -47,7 +47,6 @@ public class FieldsController {
     @GetMapping("/fields/delete/{id}")
     public String deleteById(@PathVariable long id) {
         fieldService.DeleteFieldById(id);
-
         return String.format("Field %s deleted", id);
     }
 

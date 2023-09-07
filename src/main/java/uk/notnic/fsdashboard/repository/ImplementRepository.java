@@ -10,7 +10,6 @@ import java.util.Optional;
 @Repository
 public interface ImplementRepository extends CrudRepository<Implement, Long> {
     List<Implement> findAll();
-
     Optional<Implement> findById(Long id);
 }
 

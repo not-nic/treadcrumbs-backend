@@ -46,7 +46,8 @@ public class ContractService implements ServiceHelper {
                 contractRepository.save(mission);
             }
         } catch (NullPointerException e){
-            System.out.println(Ansi.ansi().fgCyan().a(String.format("[INFO] %s: | No Contracts found.", missions.getClass().getSimpleName())).reset());
+            System.out.println(Ansi.ansi().fgCyan().a(String.format("[INFO] %s: | No Contracts found.",
+                    missions.getClass().getSimpleName())).reset());
         }
     }
 }

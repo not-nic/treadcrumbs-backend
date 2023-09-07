@@ -24,7 +24,6 @@ public class FinanceController {
     @PostMapping("/finances")
     public String createFinanceStat(@RequestBody FinanceStats financeStats) throws IllegalAccessException {
         financeService.createFinanceStat(financeStats);
-
         return String.format("Finance Stat %s created.", financeStats.getId());
     }
 }

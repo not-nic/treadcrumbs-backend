@@ -24,9 +24,6 @@ public class FinanceService {
     }
 
     public List<FinanceStats> getAllFinances() {
-
-
-
         return financeRepository.findAll();
     }
 

@@ -89,26 +89,27 @@ public class FieldService implements ServiceHelper {
             // loop over all farmlands found in tillage of precisionfarming.xml
             for (Farmland farmland : precisionFarmings.getEnvironmentalScore().getTillage().getFarmlandList()) {
 
-                // check if the farmlandId and the playerFarmlandId are the same - if so we can get information to fill out most of the fields.
+                // check if the farmlandId and the playerFarmlandId are the same
+                // if so we can get information to fill out most of the fields.
                 if (playerFarmland.getId().equals(farmland.getFarmlandId())) {
 
                     if (!Stream.of(farmland).allMatch(Objects::isNull)) {
-                        // create new field for player, some attributes are false as Farming Simulator doesn't provide them by default.
-
+                        // create new field for player, some attributes are false as
+                        // Farming Simulator doesn't provide them by default.
                         newField = new Field(null, null, "", farmland.getFarmlandId(),
                                 1, farmland.getFieldAreaHa(), 140.0, 7.00000,
                                 playerFarmland.getOwned(), false, false, false);
-
                         fieldRepository.save(newField);
                         foundMatch = true;
                         break;
                     }
 
-                    // create new field for player, some attributes are false as Farming Simulator doesn't provide them by default.
-                    newField = new Field(null, null, "this is a farmland and cannot grow crops", farmland.getFarmlandId(),
+                    // create new field for player, some attributes are false as
+                    // Farming Simulator doesn't provide them by default.
+                    newField = new Field(null, null,
+                            "this is a farmland and cannot grow crops", farmland.getFarmlandId(),
                             null, null, 0.0, 0.0,
                             playerFarmland.getOwned(), false, false, false);
-
                     fieldRepository.save(newField);
                     foundMatch = true;
                     break;

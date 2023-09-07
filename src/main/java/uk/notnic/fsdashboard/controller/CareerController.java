@@ -17,7 +17,6 @@ public class CareerController {
         this.careerService = careerService;
     }
 
-
     @GetMapping("/career")
     public List<Career> getCareer() {
         return careerService.getCareer();

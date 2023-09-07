@@ -43,6 +43,20 @@ public class NoteService {
         noteRepository.save(note);
     }
 
+    public Note updateNote(long id, Note updatedNote) {
+        Note existingNote = noteRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Note with ID %s not found", id)));
+        updatedNote.setCreated(existingNote.getCreated());
+
+        modelMapper.map(updatedNote, existingNote);
+
+        return noteRepository.save(existingNote);
+    }
+
+    public void DeleteNoteById(long id) {
+        noteRepository.deleteById(id);
+    }
+
     // get arguments from a command that are joined with a `:`
     private List<String> findArguments(String noteContents) {
         List<String> matches = new ArrayList<>();
@@ -99,11 +113,13 @@ public class NoteService {
 
                 if ("field".equals(argumentName)) {
                     // find the field by its id, if it exists add it to the string builder.
-                    fieldRepository.findById(argumentValue).ifPresent(field -> newContents.append(String.format("%s field %s", commandType, field.getFarmlandId())));
+                    fieldRepository.findById(argumentValue).ifPresent(field ->
+                            newContents.append(String.format("%s field %s", commandType, field.getFarmlandId())));
 
                 } else if ("vehicle".equals(argumentName)) {
                     // find the vehicle by its id, if it exists add it to the string builder.
-                    tractorRepository.findById(argumentValue).ifPresent(tractor -> newContents.append(String.format(" using %s.", tractor.getName())));
+                    tractorRepository.findById(argumentValue).ifPresent(tractor ->
+                            newContents.append(String.format(" using %s.", tractor.getName())));
                 }
             } else if (value instanceof String cropName) {
                 // check if a crop exists as a 'optional' argument for seed jobs.
@@ -112,7 +128,8 @@ public class NoteService {
                 // check if the additional note data is not empty
                 if (!note.getAdditionalNoteData().isEmpty()) {
 
-                    // take the two arguments for seeding (field size & seeds per Ha) which are passed in from the frontend.
+                    // take the two arguments for seeding (field size & seeds per Ha)
+                    // which are passed in from the frontend.
                     Map<String, String> newNoteData = new HashMap<>();
                     Double[] fieldSizeWrapper = {0.0};
                     double seedsPerHa = 0.0;
@@ -166,18 +183,5 @@ public class NoteService {
         noteRepository.save(note);
     }
 
-    public Note updateNote(long id, Note updatedNote) {
-        Note existingNote = noteRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("Note with ID %s not found", id)));
 
-        updatedNote.setCreated(existingNote.getCreated());
-
-        modelMapper.map(updatedNote, existingNote);
-
-        return noteRepository.save(existingNote);
-    }
-
-    public void DeleteNoteById(long id) {
-        noteRepository.deleteById(id);
-    }
 }
