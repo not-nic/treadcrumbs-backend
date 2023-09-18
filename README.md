@@ -27,7 +27,7 @@ spring.datasource.username=postgres
 spring.datasource.password=password
 spring.servlet.multipart.max-file-size=30MB
 ```
-3. Start a PostgreSQL database through your own preferred method, or start one through Docker. (If you have  [WSL](https://learn.microsoft.com/en-us/windows/wsl/install))
+3. Start a PostgreSQL database through your own preferred method, or start one through Docker.
 ```bash
 docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=password -d postgres
 ```
