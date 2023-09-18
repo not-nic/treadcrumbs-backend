@@ -5,7 +5,7 @@ This is the backend for my dissertation project. A more detailed writeup about t
 
 This is a Single user application that utilises Spring Boot. This backend provides different RESTful API endpoints to upload an entire save game, request uploaded data from a Postgres database, and manipulate it by adding new Fields, Vehicles, Notes and Finances.
 
-This was the first major project I had created with Spring Boot, which have lead to many areas I would like to revisit and improve upon in the future. 
+This was the first major project I had created with Spring Boot, which have led to many areas I would like to revisit and improve upon in the future. 
 
 There are things within this project that remain unpolished and unfinished. However, there are a few choices that are intentional, particularly within [this method]( https://github.com/not-nic/treadcrumbs-backend/blob/main/src/main/java/uk/notnic/fsdashboard/service/ServiceHelper.java), (which used in every service) that throws both a `DocumentException` and  `JAXBException`. This was intentional as part of my report was comparing these two XML parsing techniques.
 
