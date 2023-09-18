@@ -3,7 +3,7 @@
 ## Project Description
 This is the backend for my dissertation project. A more detailed writeup about this application and the features it has can be found [here](https://github.com/not-nic/treadcrumbs-frontend/).
 
-This is a Single user application that utilises Spring Boot. This backend provides different API endpoints to upload an entire save game, request uploaded data from a Postgres database, and manipulate it by adding new Fields, Vehicles, Notes and Finances. 
+This is a Single user application that utilises Spring Boot. This backend provides different RESTful API endpoints to upload an entire save game, request uploaded data from a Postgres database, and manipulate it by adding new Fields, Vehicles, Notes and Finances.
 
 This was the first major project I had created with Spring Boot, which have lead to many areas I would like to revisit and improve upon in the future. 
 
